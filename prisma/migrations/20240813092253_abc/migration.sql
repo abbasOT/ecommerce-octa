@@ -1,0 +1,2 @@
+-- DropForeignKey
+ALTER TABLE "tax_rate" DROP CONSTRAINT "FK_b95a1e03b051993d208366cb960";

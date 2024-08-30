@@ -1,0 +1,35 @@
+
+
+.MuiTableRow-root {
+    background: #F9F9F9;
+    border-bottom: none !important;
+    border-radius: 1rem !important;
+}
+
+/* .MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root,
+.MuiTableCell-root {
+    border-bottom: none !important;
+    color:#333E48 !important;
+}
+
+.MuiTableHeadCell-root {
+    color: #7A7A82 !important;
+} */
+
+.MuiTableCell-root {
+    padding: 16px !important;
+}
+
+.MuiTableCell-root {
+    padding: 16px 40px !important;
+}

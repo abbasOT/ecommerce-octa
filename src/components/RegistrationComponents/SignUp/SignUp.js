@@ -3,8 +3,8 @@
 import React, { useState } from 'react'
 import { Box, Typography, TextField, InputLabel, Button, useMediaQuery, Checkbox } from '@mui/material'
 import { RegistrationStyles } from '../../Ui/Styles/Styles';
-import Google from "../../Ui/Assets/Registration/google.svg"
-import Logo from "../../Ui/Assets/Registration/NodeLogo.svg"
+import Google from "../../Ui/Assets/Registration/google.svg";
+import Logo from "@/components/Ui/Assets/Registration/circuitHubLogoBlue.svg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector } from 'react-redux';
@@ -12,6 +12,8 @@ import Image from 'next/image';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import medusa from '@/medusaClient';
+import HeaderBar from '@/components/LayoutComponents/Header/HeaderBar/HeaderBar';
+import FooterMain from '@/components/LayoutComponents/Footer/FooterMain/FooterMain';
 function SignUp() {
 
     const isXS = useMediaQuery("(max-width: 600px)");
@@ -67,10 +69,13 @@ function SignUp() {
     };
 
 
+    const handleNavigationLogin = () => {
+        router.push('/login');
+    }
     return (
         <>
 
-
+<HeaderBar />
             <Box sx={RegistrationStyles.outerBox}>
                 <Box sx={{ ...RegistrationStyles.LogoBox, }}>
                     <Image src={Logo} width={isXS ? "280px" : "400px"} alt="Node" />
@@ -79,7 +84,7 @@ function SignUp() {
                     Create Free Account
                 </Typography>
                 <Typography sx={RegistrationStyles.subTitle}>
-                    Clarity gives you the blocks and components you need to create a <br></br> truly  professional website.
+                    Create a new account today and enjoy a personalized shopping experience with <br></br> exclusive deals and offers
                 </Typography>
                 <Box sx={RegistrationStyles.formBox}>
                     <form
@@ -163,14 +168,16 @@ function SignUp() {
                             </Button>
                         </Box>
                         <Box sx={RegistrationStyles.linkBox}>
-                            <Typography sx={RegistrationStyles.subTitle}>
-                                Already Have An Account?{'\u00a0'} <Link href={'/login'} style={RegistrationStyles.linkStyle}>Log in</Link>
+                            <Typography sx={RegistrationStyles.subTitle} >
+                                Already Have An Account?
                             </Typography>
+                            <Typography style={RegistrationStyles.linkStyle} onClick={handleNavigationLogin}>Log in</Typography>
                         </Box>
 
                     </form>
                 </Box>
             </Box>
+            <FooterMain />
         </>
     )
 }

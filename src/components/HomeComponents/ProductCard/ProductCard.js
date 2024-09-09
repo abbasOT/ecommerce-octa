@@ -65,9 +65,19 @@ function ProductCard({ product }) {
         if (customerId !== "") {
             try {
                 // API call to add product to wishlist
-                const response = await axios.post('/api/wishlist/create', {
-                    customerId,
-                    productId: product.id,
+                // const response = await axios.post('/api/wishlist/create', {
+                //     customerId,
+                //     productId: product.id,
+                // });
+                const response = await fetch('/api/wishlist/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain', // Change the Content-Type to text/plain
+                    },
+                    body: JSON.stringify({
+                        customerId,
+                        productId: product.id,
+                    }),
                 });
 
                 console.log('Wishlist item created:', response.data);
@@ -100,6 +110,11 @@ function ProductCard({ product }) {
         dispatch(selectProduct(product))
         router.push(`/product-detail`);
     };
+
+    const amount = product?.variants[0]?.prices[0]?.amount
+    const amountPKR = amount ? amount * 280 : 0;
+
+
     return (
         <div style={{ padding: "1rem" }}>
             <Box sx={{ ...RegistrationStyles.formBox, ...ServiceCardStyles.cardBox, ...ProductCardStyles.cardBox }} onClick={handleCardClick}>
@@ -115,7 +130,8 @@ function ProductCard({ product }) {
                             {product?.title}
                         </Typography>
                         <Typography sx={{ ...WhyChooseUsStyles.WhyChooseUsTitle, ...ProductCardStyles.descriptionTypo, ...ProductCardStyles.typoFont }}>
-                            ${product?.variants[0]?.prices[0]?.amount / 100}
+                            {/* ${product?.variants[0]?.prices[0]?.amount} */}
+                            Rs {amountPKR.toFixed(2)}
                         </Typography>
                     </Box>
                     <Box sx={ProductCardStyles.iconsBox}>

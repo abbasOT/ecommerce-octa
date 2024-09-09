@@ -59,10 +59,19 @@ function Wishlist() {
         } else {
             try {
                 // Call the API to remove from the database if there's a customerId
+                // const response = await fetch('/api/wishlist/delete', {
+                //     method: 'DELETE',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ productId: productId, customerId: customerId }), // Include customerId in the request
+                // });
+
+
                 const response = await fetch('/api/wishlist/delete', {
                     method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'text/plain', // Change the Content-Type to text/plain
                     },
                     body: JSON.stringify({ productId: productId, customerId: customerId }), // Include customerId in the request
                 });

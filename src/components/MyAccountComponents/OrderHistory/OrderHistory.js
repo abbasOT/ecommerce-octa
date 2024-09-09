@@ -7,36 +7,47 @@ import Emptycart from "../../Ui/Assets/AddToCart/ShoppingEmptyCart.svg"
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'; // Import the arrow icon
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation';
+import medusa from '@/medusaClient';  // Adjust the import path as necessary
+
 
 const orders = [
-    {
-        label: 'Raw Black T-Shirt Lineup',
-        date: '27 July 2023',
-        price: '$70.00',
-        status: 'Processing',
-        imgPath: DeviceImg
-    },
-    {
-        label: 'Raw Black T-Shirt Lineup',
-        date: '27 July 2023',
-        price: '$70.00',
-        status: 'Completed',
-        imgPath: DeviceImg
-    },
-    {
-        label: 'Raw Black T-Shirt Lineup',
-        date: '27 July 2023',
-        price: '$70.00',
-        status: 'Processing',
-        imgPath: DeviceImg
-    },
+    // {
+    //     label: 'Raw Black T-Shirt Lineup',
+    //     date: '27 July 2023',
+    //     price: '$70.00',
+    //     status: 'Processing',
+    //     imgPath: DeviceImg
+    // },
+    // {
+    //     label: 'Raw Black T-Shirt Lineup',
+    //     date: '27 July 2023',
+    //     price: '$70.00',
+    //     status: 'Completed',
+    //     imgPath: DeviceImg
+    // },
+    // {
+    //     label: 'Raw Black T-Shirt Lineup',
+    //     date: '27 July 2023',
+    //     price: '$70.00',
+    //     status: 'Processing',
+    //     imgPath: DeviceImg
+    // },
     // Add more orders as needed
 ];
 
 function OrderHistory() {
-
+    const router = useRouter();
     const customerId = useSelector((state => state.medusaConfig.customer_id))
+
+    const [customerOrders, setCustomerOrders] = useState([]);
+
+    console.log(customerOrders)
+
+    const handleShopping = () => {
+        router.push('/shop');
+    }
 
     return (
         <>
@@ -86,7 +97,7 @@ function OrderHistory() {
                             <Typography sx={MyAccountStyles.emptyHistorySubtitle}>
                                 Your order history is waiting to be filled.
                             </Typography>
-                            <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton }} >
+                            <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton }} onClick={handleShopping}>
                                 Start Shopping <ArrowForwardIcon sx={{ width: 22 }} />
                             </Button>
                         </Box>

@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { FooterMainStyles, ShopStyles } from '@/components/Ui/Styles/Styles';
 import { setSelectedCategory, setSelectedCategoryWithProducts } from '@/redux/slices/categoriesSlice';
+import { searchValues } from '@/redux/slices/searchBar';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -17,7 +18,9 @@ function ShopCategoriesCard() {
     const selectedCategory = useSelector((state) => state.categories.selectedCategory);
 
     const handleCategoryClick = (name) => {
+        dispatch(searchValues({ searchQuery: "" }));
         dispatch(setSelectedCategory(name));
+
         // Find all products that belong to the selected category
         let productsInCategory = [];
         // Iterate through categoriesWithProducts to find the selected category

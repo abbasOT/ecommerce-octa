@@ -80,7 +80,7 @@ function FilterSideBar() {
 
             <Box Box sx={DisplayProductsStyles.headingContainerBox}>
                 <Typography sx={{ ...CategoriesCardStyles.listItemText, ...ShopStyles.shopFilterOptionTypo }} >
-                    Price, $
+                    Price, PKR
                 </Typography>
                 <ExpandMoreIcon />
             </Box >
@@ -93,10 +93,10 @@ function FilterSideBar() {
                     valueLabelDisplay="auto"
                     getAriaValueText={valuetext}
                     min={0}
-                    max={900}
+                    max={9000}
                 />
                 <Box sx={ShopStyles.filterSideBarButtonBox}>
-                    <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, ...ShopStyles.filterSideBarPriceRangeButton }} >${priceRange[0]} - ${priceRange[1]}</Button>
+                    <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, ...ShopStyles.filterSideBarPriceRangeButton }} >Rs{priceRange[0]} - Rs{priceRange[1]}</Button>
                     <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, ...ShopStyles.filterSideBarApplyButton }} onClick={handlePriceRangeApply}>Apply</Button>
                 </Box>
             </Box>

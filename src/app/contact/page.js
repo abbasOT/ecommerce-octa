@@ -1,29 +1,23 @@
 
-"use client"
+// import dynamic from 'next/dynamic';
 
-import LogIn from "@/components/RegistrationComponents/LogIn/LogIn";
-import HeaderBar from "@/components/LayoutComponents/Header/HeaderBar/HeaderBar";
-import FooterMain from "@/components/LayoutComponents/Footer/FooterMain/FooterMain";
-import HeaderMain from "@/components/LayoutComponents/Header/HeaderMain/HeaderMain";
-import NavBar from "@/components/LayoutComponents/Header/Navbar/Navbar";
-import FooterBar from "@/components/LayoutComponents/Footer/FooterBar/FooterBar";
-import FAQs from "@/components/ContactComponents/FAQs/FAQs";
-import GetInTouch from "@/components/ContactComponents/GetInTouch/GetInTouch";
-import BreadCrumb from "@/components/LayoutComponents/Header/BreadCrumb/BreadCrumb";
+import ContactPage from "@/components/ContactComponents/ContactPage/ContactPage";
 
 
+// import LoadingSpinner from '@/components/Ui/LoadingSpinner/LoadingSpinner';
 
-export default function ContactPage() {
+
+// Dynamically import HomePage with MUI loader
+// const ContactPage = dynamic(() => import('@/components/ContactComponents/ContactPage/ContactPage'), {
+//   loading: () => <LoadingSpinner />,
+// });
+
+
+export default function Home() {
     return (
         <>
-            <HeaderBar />
-            <HeaderMain />
-            <NavBar />
-            <BreadCrumb />
-            <GetInTouch />
-            <FAQs />
-            <FooterBar />
-            <FooterMain />
+      <ContactPage />
+      {/* contact */}
         </>
     );
 }

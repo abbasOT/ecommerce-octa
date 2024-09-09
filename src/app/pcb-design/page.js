@@ -1,5 +1,4 @@
 
-"use client"
 
 import LogIn from "@/components/RegistrationComponents/LogIn/LogIn";
 import HeaderBar from "@/components/LayoutComponents/Header/HeaderBar/HeaderBar";

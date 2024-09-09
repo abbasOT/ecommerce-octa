@@ -8,7 +8,8 @@ const customerId = typeof window !== 'undefined' ? localStorage.getItem("custome
 
 const initialState = {
     medusa: "medusa",
-    customer_id: customerId || ""
+    customer_id: customerId || "",
+    customerOrders: [],
 };
 
 export const medusaConfig = createSlice({
@@ -23,11 +24,14 @@ export const medusaConfig = createSlice({
         customer_id: (state, action) => {
             state.customer_id = action.payload;
         },
+        setCustomerOrders: (state, action) => {
+            state.customerOrders = action.payload;
+        },
 
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { medusaValues, customer_id } = medusaConfig.actions;
+export const { medusaValues, customer_id, setCustomerOrders } = medusaConfig.actions;
 
 export default medusaConfig.reducer;

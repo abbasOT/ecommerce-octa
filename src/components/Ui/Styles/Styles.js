@@ -15,7 +15,7 @@ export const RegistrationStyles = {
         fontSize: "2rem", fontFamily: 'var(--font-family-primary)', color: "#090914", fontWeight: 600, textAlign: "center",
     },
     subTitle: {
-        fontFamily: 'var(--font-family-primary)', color: "#71717A", fontWeight: 400, fontFamily: 'var(--font-family-secondary)', fontSize: "0.9rem", textAlign: "center", margin: "1rem 0rem 2.5rem 0rem"
+        fontFamily: 'var(--font-family-primary)', color: "#71717A", fontWeight: 400, fontFamily: 'var(--font-family-secondary)', fontSize: "0.9rem", textAlign: "center", pt: "0.2rem", padding: "1rem 0rem"
     },
     textField: {
         '& .MuiInputBase-root.MuiOutlinedInput-root': {
@@ -55,10 +55,10 @@ export const RegistrationStyles = {
         },
     },
     linkStyle: {
-        color: 'var(--primary-color)', fontWeight: 600, fontSize: "0.9rem", textTransform: "none", textDecoration: "none", fontFamily: 'var(--font-family-primary)'
+        color: 'var(--primary-color)', fontWeight: 600, fontSize: "0.9rem", textTransform: "none", textDecoration: "none", fontFamily: 'var(--font-family-primary)', cursor: "pointer"
     },
     linkBox: {
-        display: 'flex', justifyContent: 'center', marginTop: "1rem"
+        display: 'flex', justifyContent: 'center', padding: "2rem 1rem", alignItems: "center", gap: "1rem"
     },
     linksContainerBox: {
         display: "flex", justifyContent: "space-between", gap: "0.5rem", marginTop: "0.5rem"
@@ -525,7 +525,7 @@ export const ContactFormStyles = {
         display: 'flex', justifyContent: { lg: 'start', xs: "center" }
     },
     sendMessageButton: {
-        borderRadius: "5px", color: "#FFF", background: "#101010", padding: "0.7rem 2.5rem"
+        borderRadius: "5px", color: "#FFF", background: "#101010", padding: "0.7rem 2.5rem",
     },
     labelStyle: {
         fontWeight: 400, color: "#121212", textAlign: "start"
@@ -804,11 +804,11 @@ export const ShopStyles = {
     shopCategoriesContentBox: { padding: "1rem 0rem", cursor: "pointer" },
     shopCategoriesTypo: { fontFamily: 'var(--font-family-primary)', fontSize: "0.9rem", paddingTop: "1.5rem" },
     shopFilterOptionTypo: { fontSize: "0.9rem", fontWeight: 600 },
-    filterSideBarContainerBox: { padding: "1rem 2rem", maxwidth: 300, display: "flex", flexDirection: "column", gap: "1rem" },
-    filterSideBarButtonBox: { display: "flex", gap: "1rem", justifyContent: "center ", pt: 1 },
-    filterSideBarSliderContainer: { width: 250, p: "0 0.5rem" },
-    filterSideBarPriceRangeButton: { border: "none", background: "#F6F6F6", color: "#0E1422", padding: "auto", borderRadius: 0, boxShadow: "none" },
-    filterSideBarApplyButton: { padding: "0rem 1.5rem", borderRadius: 0 },
+    filterSideBarContainerBox: { padding: "1rem 1rem 1rem 2rem", width: 320, display: "flex", flexDirection: "column", gap: "1rem" },
+    filterSideBarButtonBox: { display: "flex", gap: "0.5rem", pt: 1 },
+    filterSideBarSliderContainer: { width: 270, p: "0 0.5rem" },
+    filterSideBarPriceRangeButton: { border: "none", background: "#F6F6F6", color: "#0E1422", padding: "auto", borderRadius: 0, boxShadow: "none", width: 200 },
+    filterSideBarApplyButton: { padding: "0rem 1.4rem", borderRadius: 0 },
     filterChipsBox: { display: "flex", flexFlow: "wrap", gap: "1rem", paddingLeft: "1rem", mt: 1 },
     filterTopBarContainerBox: { display: "flex", flexDirection: { sm: "row", xs: "column" }, justifyContent: "space-between", p: "0 1rem", maxWidth: 1200 },
     filterTopBarButtonBox: { display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem", pt: 1 },

@@ -1,15 +1,17 @@
 "use client"
 
 import { ContactFormStyles, FAQsStyles } from '@/components/Ui/Styles/Styles'
-import { Typography, Grid, Box, TextField, Button, InputLabel, useMediaQuery } from '@mui/material'
+import { Typography, Grid, Box, TextField, Button, InputLabel, useMediaQuery, CircularProgress } from '@mui/material'
 import { FooterMainStyles, RegistrationStyles, WhyChooseUsStyles, } from '@/components/Ui/Styles/Styles'
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import React from 'react'
+import React, { useState } from 'react'
 
 function GetInTouch() {
     const isMobile = useMediaQuery('(max-width:600px)');
+    const [loading, setLoading] = useState(false);
+
 
     const formik = useFormik({
         initialValues: {
@@ -26,9 +28,36 @@ function GetInTouch() {
                 .required("Please Enter Your Message"),
         }),
         onSubmit: async (values) => {
+            setLoading(true);
+            try {
+                const response = await fetch("/api/sendemail/create", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": 'text/plain',
+                    },
+                    body: JSON.stringify({
+                        name: values.name,
+                        email: values.email,
+                        message: values.message,
+                    }),
+                });
 
-            console.log("User signed up successfully:", values.name, values.email, values.message);
-
+                if (response.ok) {
+                    console.log("Email sent successfully");
+                    alert("Email sent successfully")
+                    setLoading(false);
+                    // Optionally show a success message to the user
+                } else {
+                    console.error("Error sending email");
+                    alert("Error sending email")
+                    setLoading(false);
+                    // Optionally show an error message to the user
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Error sending email")
+                setLoading(false);
+            }
         },
     });
     return (
@@ -104,7 +133,9 @@ function GetInTouch() {
                         ) : null} */}
 
                         <Box sx={ContactFormStyles.buttonBox} >
-                            <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton }} >Send Message</Button>
+                            <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, minWidth: 250 }} disabled={loading} >
+                                {loading ? <CircularProgress size={24} sx={{ color: "#FFF" }} /> : "Send Message"}
+                            </Button>
                         </Box>
 
 

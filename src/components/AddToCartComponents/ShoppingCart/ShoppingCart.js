@@ -17,7 +17,11 @@ export default function ShoppingCart({ cartItems, handleUpdateQuantity, }) {
             <Box style={styles.pd}>
                 <Typography sx={styles.bold}>Shopping Cart</Typography>
                 {cartItems.map((product, index) => {
-                    const productTotal = (product.variants[0].prices[0].amount / 100) * product.quantity;
+                    const amount = product?.variants[0]?.prices[0]?.amount
+                    const amountPKR = amount ? amount * 280 : 0;
+                    const subTotal = amountPKR.toFixed(2)
+
+                    const productTotal = subTotal * product.quantity;
 
                     return (
                         <React.Fragment key={index}>
@@ -43,7 +47,7 @@ export default function ShoppingCart({ cartItems, handleUpdateQuantity, }) {
                                     <Button sx={styles.addremoveButton} onClick={() => handleUpdateQuantity(product.id, product.quantity + 1)}>+</Button>
                                 </div>
                                 <div style={styles.box3}>
-                                    <Typography sx={styles.bold}>${productTotal.toFixed(2)}</Typography>
+                                    <Typography sx={styles.bold}>Rs {productTotal.toFixed(2)}</Typography>
                                     <CloseIcon style={styles.cancel} onClick={() => handleUpdateQuantity(product.id, 0)} />
                                 </div>
                             </Box>

@@ -43,13 +43,13 @@ function SideBar({ activeComponent, setActiveComponent }) {
                         <FavoriteBorderOutlinedIcon />
                         Wishlist
                     </Button>
-                    <Button
+                    {/* <Button
                         sx={{ ...MyAccountStyles.sideBarSelectButton, backgroundColor: getButtonBackgroundColor('ChangePassword') }}
                         onClick={() => handleButtonClick('ChangePassword')}
                     >
                         <VpnKeyOutlinedIcon sx={{ transform: 'rotate(300deg)' }} />
                         Password
-                    </Button>
+                    </Button> */}
                 </Box>
                 <Divider orientation="vertical" flexItem sx={MyAccountStyles.sideBarDividerStyle} />
             </Box>

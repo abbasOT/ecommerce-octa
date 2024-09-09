@@ -1,9 +1,12 @@
+"use server"
 import { NextResponse } from 'next/server';
 import prisma from '../../../../../lib/prisma'; // Adjust the path based on your project setup
 
 export async function DELETE(req) {
     try {
-        const { customerId, productId } = await req.json(); // Extract both customerId and productId
+        // Read raw text and parse JSON
+        const text = await req.text();
+        const { customerId, productId } = JSON.parse(text);
 
         const deletedWishlist = await prisma.wishlist.deleteMany({
             where: {

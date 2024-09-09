@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from 'react'
-import { Grid, Box } from '@mui/material'
+import { Grid, Box, Typography } from '@mui/material'
 import DisplayProducts from '@/components/HomeComponents/DisplayProducts/DisplayProducts'
 import ShopCategoriesCard from '../ShopCategoriesCard/ShopCategoriesCard'
 import FilterSideBar from '../FilterSideBar/FilterSideBar'
@@ -18,13 +18,25 @@ function ShopMain() {
     const products = useSelector((state) => state.categories.selectedCategorywithProducts)
     const allProducts = useSelector((state) => state.product.allProducts)
     const { color, size, appliedPriceRange } = useSelector((state) => state.filterProducts);
+    const searchQuery = useSelector((state) => state.searchBar.searchQuery);
+
+
 
     console.log(color)
     // Function to check if the product matches the filters
     // Function to check if the product matches the filters
     const isProductMatched = (product) => {
         // Check price range
-        const productPrice = product.variants[0].prices[0].amount / 100;
+
+        const productName = product.title.toLowerCase(); // Assuming `product.title` is the name field
+
+        // If there's a search query, check if the product matches the search query
+        if (searchQuery && !productName.includes(searchQuery)) {
+            return false;
+        }
+
+
+        const productPrice = product.variants[0].prices[0].amount * 280;
         if (appliedPriceRange?.length === 2 && (productPrice < appliedPriceRange[0] || productPrice > appliedPriceRange[1])) {
             return false;
         }
@@ -44,13 +56,21 @@ function ShopMain() {
         return true;
     };
 
-    // Find the matched products
-    const matchedProducts = products.map(product => {
-        const matchingProduct = allProducts.find(p => p.id === product.id);
-        return matchingProduct ? { ...product, ...matchingProduct } : null;
-    }).filter(product => product !== null && isProductMatched(product));
+    let productList;
 
-    console.log(matchedProducts);
+    if (searchQuery !== "") {
+        // If searchQuery is present, filter directly from allProducts
+        productList = allProducts.filter(product => isProductMatched(product));
+    } else {
+        // If no searchQuery, map over selectedCategorywithProducts and find matching products in allProducts
+        productList = products.map(product => {
+            const matchingProduct = allProducts.find(p => p.id === product.id);
+            return matchingProduct ? { ...product, ...matchingProduct } : null;
+        }).filter(product => product !== null && isProductMatched(product));
+    }
+
+
+    console.log(productList, "the products i am looking for");
 
 
     return (
@@ -58,15 +78,21 @@ function ShopMain() {
             <Grid item xs={12} lg={12} sx={ShopStyles.mainFirstGrid}>
                 <ShopCategoriesCard />
             </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={3} sx={ShopStyles.mainSecondGrid}>
+            <Grid item xs={12} sm={12} md={4} lg={3.2} sx={ShopStyles.mainSecondGrid}>
                 <FilterSideBar />
             </Grid>
-            <Grid item xs={12} sm={12} md={8} lg={9} sx={ShopStyles.mainThirdGrid}>
+            <Grid item xs={12} sm={12} md={8} lg={8.8} sx={ShopStyles.mainThirdGrid}>
                 <FilterTopBar />
                 <Box sx={{ display: "flex", flexFlow: "wrap" }}>
-                    {matchedProducts.map((product, index) => (
-                        <ProductCard key={index} product={product} />
-                    ))}
+                    {productList.length > 0 ? (
+                        productList.map((product, index) => (
+                            <ProductCard key={index} product={product} />
+                        ))
+                    ) : (
+                        <Typography sx={{ textAlign: "center", pt: "4rem" }}>
+                            No products found in this category with the applied filters.
+                        </Typography>
+                    )}
                 </Box>
             </Grid>
         </Grid>

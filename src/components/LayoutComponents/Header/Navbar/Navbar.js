@@ -1,15 +1,17 @@
-"use client"
+
+
+"use client";
 import React, { useEffect, useState } from 'react';
 import { Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Link from 'next/link';
-import { usePathname, } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation'; // Import useRouter
 import { HeaderBarStyles, RegistrationStyles } from '@/components/Ui/Styles/Styles';
 
-function NavBar() {
+ const NavBar = () => {
     const [currentPath, setCurrentPath] = useState('');
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const pathname = usePathname();
+    const pathname = usePathname(); 
+    const router = useRouter(); 
 
     useEffect(() => {
         setCurrentPath(pathname);
@@ -28,23 +30,29 @@ function NavBar() {
         setDrawerOpen(open);
     };
 
+    // Handle navigation using router.push instead of href
+    const handleNavigation = (path) => {
+        setDrawerOpen(false); // Close the drawer after navigating
+        router.push(path); // Navigate to the route
+    };
+
     const renderLinks = () => (
         <>
-            <Link style={getLinkStyle("/")} href="/">
+            <span style={getLinkStyle("/")} onClick={() => handleNavigation("/")}>
                 Home
-            </Link>
-            <Link style={getLinkStyle("/shop")} href="/shop">
+            </span>
+            <span style={getLinkStyle("/shop")} onClick={() => handleNavigation("/shop")}>
                 Shop
-            </Link>
-            <Link style={getLinkStyle("/about")} href="/about">
+            </span>
+            <span style={getLinkStyle("/about")} onClick={() => handleNavigation("/about")}>
                 About Us
-            </Link>
-            <Link style={getLinkStyle("/contact")} href="/contact">
+            </span>
+            <span style={getLinkStyle("/contact")} onClick={() => handleNavigation("/contact")}>
                 Contact
-            </Link>
-            <Link style={getLinkStyle("/track-order")} href="/track-order">
+            </span>
+            {/* <span style={getLinkStyle("/track-order")} onClick={() => handleNavigation("/track-order")}>
                 Track Order
-            </Link>
+            </span> */}
         </>
     );
 
@@ -61,21 +69,21 @@ function NavBar() {
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
                 <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
                     <List>
-                        <ListItem button component="a" href="/" selected={currentPath === "/"}>
+                        <ListItem button onClick={() => handleNavigation("/")} selected={currentPath === "/"}>
                             <ListItemText style={getLinkStyle("/")} primary="Home" />
                         </ListItem>
-                        <ListItem button component="a" href="/shop" selected={currentPath === "/shop"}>
+                        <ListItem button onClick={() => handleNavigation("/shop")} selected={currentPath === "/shop"}>
                             <ListItemText style={getLinkStyle("/shop")} primary="Shop" />
                         </ListItem>
-                        <ListItem button component="a" href="/about" selected={currentPath === "/aboutus"}>
+                        <ListItem button onClick={() => handleNavigation("/about")} selected={currentPath === "/about"}>
                             <ListItemText style={getLinkStyle("/about")} primary="About Us" />
                         </ListItem>
-                        <ListItem button component="a" href="/contact" selected={currentPath === "/contact"}>
+                        <ListItem button onClick={() => handleNavigation("/contact")} selected={currentPath === "/contact"}>
                             <ListItemText style={getLinkStyle("/contact")} primary="Contact" />
                         </ListItem>
-                        <ListItem button component="a" href="/trackorder" selected={currentPath === "/track-order"}>
+                        {/* <ListItem button onClick={() => handleNavigation("/trackorder")} selected={currentPath === "/track-order"}>
                             <ListItemText style={getLinkStyle("/track-order")} primary="Track Order" />
-                        </ListItem>
+                        </ListItem> */}
                     </List>
                 </Box>
             </Drawer>

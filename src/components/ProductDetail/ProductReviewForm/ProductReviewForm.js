@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Box, Typography, TextField, Button, NativeSelect } from '@mui/material'
 import { ContactFormStyles, FooterMainStyles, WhyChooseUsStyles, ProductCardStyles, DisplayProductsStyles, CategoriesCardStyles, BreadCrumbStyles, ProductDetailStyles } from '@/components/Ui/Styles/Styles'
+import axios from 'axios'
 
 function ProductReviewForm() {
 
@@ -12,22 +13,27 @@ function ProductReviewForm() {
     const [comment, setComment] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (event) => {
         setRating(parseInt(event.target.value, 10)); // Ensure rating is an integer
     };
-    // Example of using the create review API in a component
-    const handleSubmit = async (event) => {
-        event.preventDefault();
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
         try {
             const response = await fetch('/api/review/create', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain', // Change the Content-Type to text/plain
                 },
                 body: JSON.stringify({
-                    rating, email, name, comment, product_id: product?.id // Ensure product is defined and has an id
+                    rating,
+                    email,
+                    name,
+                    comment,
+                    product_id: product.id // Ensure product is defined and has an id
                 }),
             });
 
@@ -35,6 +41,8 @@ function ProductReviewForm() {
                 if (response.status === 409) {
                     alert('A review with this email already exists.');
                 } else {
+                    alert('Failed to create review');
+                    console.log(response, response.body, "the response coming from API");
                     throw new Error('Failed to create review');
                 }
             } else {
@@ -45,12 +53,15 @@ function ProductReviewForm() {
                 setName("");
                 console.log('Review created:', result);
             }
-
         } catch (error) {
             alert("Error Submitted Review!");
             console.error('Error creating review:', error);
         }
+        finally {
+            setIsSubmitting(false);  // Re-enable the submit button
+        }
     };
+
     return (
 
         <form   >
@@ -115,7 +126,9 @@ function ProductReviewForm() {
                     multiline
                     rows={4} // Adjust the number of rows as needed
                 />
-                <Button variant="contained" onClick={handleSubmit} sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, width: "100%" }} >Submit</Button>
+                <Button variant="contained"
+                    disabled={isSubmitting}  // Disable the button when submitting
+                    onClick={(e) => handleSubmit(e)} sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, width: "100%" }}  >   {isSubmitting ? 'Submitting...' : 'Submit'}</Button>
             </Box>
         </form>
 

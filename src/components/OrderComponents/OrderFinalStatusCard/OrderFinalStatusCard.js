@@ -6,11 +6,32 @@ import { RegistrationStyles, FooterMainStyles, ContactFormStyles, orderStatusCar
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import OrderComplete from "../../Ui/Assets/Order/orderComplete.svg"
 import OrderFailed from "../../Ui/Assets/Order/orderError.svg"
+import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
 import Image from 'next/image'
+
 
 function OrderFinalStatusCard({ bgStripColor, imgName, title, actionButtonName }) {
 
+    const router = useRouter()
+
     const orderImage = imgName === "OrderFailed" ? OrderFailed : OrderComplete
+    const currentOrderDetails = useSelector((state) => state.order);
+    const formattedDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    const handleActionbutton = () => {
+        router.push(actionButtonName === "Continue Shopping" ? '/shop' : '/add-to-cart');
+    }
+
+    const orderDetails = [
+        { label: "Date:", value: formattedDate },
+        { label: "Total:", value: currentOrderDetails.totalAmount },
+        { label: "Payment method:", value: currentOrderDetails.paymentMethod }
+    ];
 
     return (
         <Box sx={{ ...RegistrationStyles.outerBox, }}>
@@ -45,7 +66,7 @@ function OrderFinalStatusCard({ bgStripColor, imgName, title, actionButtonName }
                             ))}
                         </Box>
                     </Box>}
-                <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, ...orderStatusCardStyles.buttonStyle }} >
+                <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, ...orderStatusCardStyles.buttonStyle }} onClick={handleActionbutton} >
                     {actionButtonName} <ArrowForwardIcon sx={{ width: 22 }} /></Button>
             </Box>
         </Box >
@@ -56,8 +77,3 @@ function OrderFinalStatusCard({ bgStripColor, imgName, title, actionButtonName }
 export default OrderFinalStatusCard
 
 
-const orderDetails = [
-    { label: "Date:", value: "October 19, 2023" },
-    { label: "Total:", value: "$1,345.00" },
-    { label: "Payment method:", value: "Credit Card" }
-];

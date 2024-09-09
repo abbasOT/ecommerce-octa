@@ -67,6 +67,8 @@ export default function ProductDetailActionBtns() {
 
   const tags = product?.tags.map(tag => tag.value).join(", ") || "No tags available";
   const amount = product?.variants[0]?.prices[0]?.amount
+  const amountPKR = amount ? amount * 280 : 0;
+
   const productDetails = [
     { label: "Tags", value: tags },
     { label: "Category", value: "Categories will be here" },
@@ -100,17 +102,17 @@ export default function ProductDetailActionBtns() {
           <Box sx={styles.ordrfl}>
             <Rating
               name="half-rating-read"
-              defaultValue={2.5}
+              defaultValue={4.5}
               precision={0.5}
               readOnly
             />
             <Typography sx={styles.ordrrw} lg={2}>
-              157 Reviews Given
+              90 Reviews Given
             </Typography>
           </Box>
 
           <Box sx={styles.ordrfl}>
-            <Typography sx={styles.bold}>Rs: {amount}/-</Typography>
+            <Typography sx={styles.bold}>Rs: {amountPKR.toFixed(2)}/-</Typography>
           </Box>
 
           <Box container sx={styles.ordrfl}>

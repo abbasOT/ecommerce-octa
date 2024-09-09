@@ -1,10 +1,11 @@
-generator client {
-  provider = "prisma-client-js"
-}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+
+}
+generator client {
+  provider = "prisma-client-js"
 }
 
 model address {
@@ -1309,7 +1310,7 @@ model region {
   id                           String                         @id(map: "PK_5f48ffc3af96bc486f5f3f3a6da") @db.VarChar
   name                         String                         @db.VarChar
   currency_code                String                         @db.VarChar
-  tax_rate               Float                          @db.Real
+  tax_rate_value               Float                          @db.Real
   tax_code                     String?                        @db.VarChar
   created_at                   DateTime                       @default(now()) @db.Timestamptz(6)
   updated_at                   DateTime                       @default(now()) @db.Timestamptz(6)

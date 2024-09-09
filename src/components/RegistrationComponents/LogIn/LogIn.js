@@ -4,17 +4,19 @@ import React, { useState } from 'react'
 import { Box, Typography, TextField, InputLabel, Button, useMediaQuery, Checkbox } from '@mui/material'
 import { RegistrationStyles } from '../../Ui/Styles/Styles';
 import Google from "../../Ui/Assets/Registration/google.svg"
-import Logo from "../../Ui/Assets/Registration/NodeLogo.svg"
+import Logo from "@/components/Ui/Assets/Registration/circuitHubLogoBlue.svg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { customer_id } from '@/redux/slices/medusaConfig';
+import { customer_id, setCustomerOrders } from '@/redux/slices/medusaConfig';
 import { updateOrderValue } from '@/redux/slices/orderSlice';
 
 import Image from 'next/image';
 import Link from 'next/link'
 import medusa from '@/medusaClient';
+import HeaderBar from '@/components/LayoutComponents/Header/HeaderBar/HeaderBar';
+import FooterMain from '@/components/LayoutComponents/Footer/FooterMain/FooterMain';
 function LogIn() {
 
     const dispatch = useDispatch();
@@ -45,14 +47,18 @@ function LogIn() {
                     .then(({ customer }) => {
                         dispatch(customer_id(customer.id))
                         dispatch(updateOrderValue({ name: 'customerId', value: customer.id }))
+                        dispatch(setCustomerOrders(customer.orders))
+
                         if (typeof window !== 'undefined') {
                             // Access localStorage only in the browser environment
                             localStorage.setItem('customerId', customer.id);
                         }
+                        console.log(customer, "the data of customer")
                     })
                 alert("User Logged In successfully!");
                 router.push('/');
                 console.log("User Logged In successfully:", values.email, values.password);
+
 
             }
             catch (error) {
@@ -70,10 +76,12 @@ function LogIn() {
             password: userData.password
         });
     };
-
+    const handleNavigationSignup = () => {
+        router.push('/signup');
+    }
     return (
         <>
-
+<HeaderBar/>
             <Box sx={RegistrationStyles.outerBox}>
                 <Box sx={{ ...RegistrationStyles.LogoBox, }}>
                     <Image src={Logo} width={isXS ? "280px" : "400px"} alt="Node" />
@@ -82,7 +90,7 @@ function LogIn() {
                     Log in to your Account
                 </Typography>
                 <Typography sx={RegistrationStyles.subTitle}>
-                    Clarity gives you the blocks and components you need to create a <br></br> truly  professional website.
+                    Log in to access your personalized shopping experience and <br></br> exclusive offers.
                 </Typography>
                 <Box sx={RegistrationStyles.formBox}>
                     <form
@@ -153,13 +161,15 @@ function LogIn() {
                         </Box>
                         <Box sx={RegistrationStyles.linkBox}>
                             <Typography sx={RegistrationStyles.subTitle}>
-                                Already Have An Account?{'\u00a0'} <Link href={'/signup'} style={RegistrationStyles.linkStyle}>Sign up</Link>
+                                Already Have An Account?
                             </Typography>
+                            <Typography style={RegistrationStyles.linkStyle} onClick={handleNavigationSignup}>Sign up</Typography>
                         </Box>
 
                     </form>
                 </Box>
             </Box>
+            <FooterMain />
         </>
     )
 }

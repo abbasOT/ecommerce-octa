@@ -1,17 +1,18 @@
-"use client"
 
-import LogIn from "@/components/RegistrationComponents/LogIn/LogIn";
-import HeaderBar from "@/components/LayoutComponents/Header/HeaderBar/HeaderBar";
-import FooterMain from "@/components/LayoutComponents/Footer/FooterMain/FooterMain";
+import dynamic from 'next/dynamic';
+import LoadingSpinner from '@/components/Ui/LoadingSpinner/LoadingSpinner';
 
+
+const LogIn = dynamic(() => import('@/components/RegistrationComponents/LogIn/LogIn'), {
+    loading: () => <LoadingSpinner />,
+    ssr:false
+  });
 
 
 export default function LogInPage() {
     return (
         <div style={{ background: "#F8FAFC" }}>
-            <HeaderBar />
             <LogIn />
-            <FooterMain />
         </div>
     );
 }

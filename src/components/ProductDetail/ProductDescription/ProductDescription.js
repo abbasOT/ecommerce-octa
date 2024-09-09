@@ -16,7 +16,7 @@ function ProductDescription() {
     const product = useSelector((state) => state.product.selectedProduct);
     return (
         <>
-            <ProductDetailTable />
+            {/* <ProductDetailTable /> */}
             <Box sx={{ margin: "2rem 0rem" }}>
                 <Typography sx={{ ...WhyChooseUsStyles.WhyChooseUsTitle, ...AboutUsMainStyles.firstTypoTitle, ...AboutUsMainStyles.secondTypoTitle, pb: 0 }}>
                     Detail

@@ -5,8 +5,8 @@ import { createSlice, } from '@reduxjs/toolkit';
 const filterProductsSlice = createSlice({
     name: 'filterProducts',
     initialState: {
-        priceRange: [100, 300],
-        appliedPriceRange: [0, 900],
+        priceRange: [50, 7000],
+        appliedPriceRange: [50, 7000],
         stockStatus: [],
         size: [],
         color: [],

@@ -75,7 +75,7 @@ function FilterTopBar() {
             <Box sx={ShopStyles.filterChipsBox}>
                 {appliedPriceRange.length > 0 && (
                     <Chip
-                        label={`Price: $${appliedPriceRange[0]} - $${appliedPriceRange[1]}`}
+                        label={`Price: PKR${appliedPriceRange[0]} - PKR${appliedPriceRange[1]}`}
                         variant="outlined"
                         sx={{ borderRadius: "0.25rem", mr: 1 }}
                         deleteIcon={<CloseIcon fontSize="small" sx={{ color: '#000' }} />}

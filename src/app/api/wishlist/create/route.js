@@ -1,9 +1,18 @@
+"use server";
 import { NextResponse } from 'next/server';
 import prisma from '../../../../../lib/prisma'; // Adjust the path based on your project setup
 
 export async function POST(req) {
     try {
-        const { customerId, productId } = await req.json();
+        // Read the raw text data from the request
+        const text = await req.text();
+
+        // Parse the text data manually
+        const { customerId, productId } = JSON.parse(text);
+
+        if (!customerId || !productId) {
+            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
 
         // Check if the wishlist item already exists
         const existingWishlist = await prisma.wishlist.findFirst({

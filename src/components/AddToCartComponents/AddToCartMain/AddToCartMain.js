@@ -25,9 +25,9 @@ export default function AddToCartMain() {
         }
     };
 
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.variants[0].prices[0].amount / 100 * item.quantity), 0);
-    const tax = subtotal * 0.2; // Assume 20% tax
-    const ship = 29; // Fixed shipping cost
+    const subtotal = cartItems.reduce((sum, item) => sum + ((item.variants[0].prices[0].amount * 280) * (item.quantity)), 0);
+    const tax = subtotal * 0.1; // Assume 20% tax
+    const ship = 30; // Fixed shipping cost
     const total = subtotal + tax + ship;
 
     return (

@@ -5,21 +5,25 @@ import MyAccount from "../../../Ui/Assets/Header/Account.svg"
 import ShoppingCart from "../../../Ui/Assets/Header/Shopping-cart.svg"
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { persistor } from '../../../../redux/store'; // Import the persistor
 import Logo from "@/components/Ui/Assets/Registration/circuitHubLogoBlue.svg";
+import Swal from 'sweetalert2';
 import { FooterMainStyles, HeaderBarStyles, HeaderMainStyles } from '@/components/Ui/Styles/Styles';
 import { setSelectedCategory, setSelectedCategoryWithProducts } from '@/redux/slices/categoriesSlice';
 
 
 import { useDispatch, useSelector } from 'react-redux';
-import { searchValues } from '@/redux/slices/searchBar';
+import { searchValue, searchValues } from '@/redux/slices/searchBar';
 import medusa from '@/medusaClient';  // Adjust the import path as necessary
+import { customer_id } from '@/redux/slices/medusaConfig';
 function HeaderMain() {
     const isMobile = useMediaQuery('(max-width:600px)');
     const dispatch = useDispatch()
     const router = useRouter();
     const cartProducts = useSelector((state) => state.product.cart);
     const searchQuery = useSelector((state) => state.searchBar.searchQuery);
-    const [inputValue, setInputValue] = useState(searchQuery);
+    // const [inputValue, setInputValue] = useState(searchQuery);
+    const inputValue = useSelector((state) => state.searchBar.searchValue);
     // const customerId = useSelector((state => state.medusaConfig.customer_id))
     const customerIdFromStore = useSelector((state) => state.medusaConfig.customer_id);
     const [customerId, setCustomerId] = useState(null);
@@ -46,7 +50,8 @@ function HeaderMain() {
     };
 
     const handleInputChange = (event) => {
-        setInputValue(event.target.value); // Update local state to reflect the input
+        const value = event.target.value; // Update local state to reflect the input
+        dispatch(searchValue({ searchValue: value }));
     };
 
     const handleSearchChange = (event) => {
@@ -63,7 +68,7 @@ function HeaderMain() {
 
 
     const handleAccount = () => {
-        router.push('/my-account');
+        router.push('/my-account/OrderHistory');
     }
 
     const handleHomeclick = () => {
@@ -74,24 +79,50 @@ function HeaderMain() {
         router.push('/add-to-cart');
     }
 
-    const handleLogOut = () => {
+    const handleLogOut = async () => {
         if (typeof window !== 'undefined') {
-            if (!customerId) {
+            if (customerId === "") {
                 // Navigate to login if customerId is empty
                 localStorage.clear();
+                sessionStorage.clear();
                 router.push('/login');
             } else {
-                // Proceed with Medusa logout
-                medusa.auth.deleteSession()
-                    .then(() => {
-                        alert("Logged out successfully!");
-                        localStorage.clear();
+
+                try {
+                    // Proceed with Medusa logout
+                    await medusa.auth.deleteSession();
+
+                    // Clear storage and Redux state
+                    localStorage.clear();
+                    sessionStorage.clear();
+
+                    // Clear Redux persisted state
+                    // await persistor.flush();  
+                    // await persistor.purge();  
+
+                    // dispatch(customer_id("")); 
+                    dispatch({ type: 'USER_LOGOUT' }); // Trigger full state reset
+
+                    // Show success message and redirect to login
+                    Swal.fire({
+                        title: 'Logged out!',
+                        text: 'You have been logged out successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        dispatch(customer_id(""));
                         router.push('/login');
-                    })
-                    .catch((error) => {
-                        console.error('Error logging out:', error);
-                        alert("Failed to log out. Please try again.");
                     });
+                } catch (error) {
+                    // Log any errors and show failure message
+                    console.error('Error logging out:', error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to log out. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             }
         }
     };
@@ -129,11 +160,11 @@ function HeaderMain() {
                         <Image src={MyAccount} width={isMobile ? 20 : 30} alt="My Account Logo" />
                         My Account
                     </Button>
-                        <Button variant="text" sx={{ ...HeaderBarStyles.buttonStyle, ...HeaderMainStyles.iconButtonStyle }} onClick={handleAddToCart}>
-                            <Image src={ShoppingCart} width={isMobile ? 20 : 30} alt="Shopping Cart Logo" />
-                            <Box sx={HeaderMainStyles.cartCountBox}>{productCount}</Box>
-                            Cart
-                        </Button>
+                    <Button variant="text" sx={{ ...HeaderBarStyles.buttonStyle, ...HeaderMainStyles.iconButtonStyle }} onClick={handleAddToCart}>
+                        <Image src={ShoppingCart} width={isMobile ? 20 : 30} alt="Shopping Cart Logo" />
+                        <Box sx={HeaderMainStyles.cartCountBox}>{productCount}</Box>
+                        Cart
+                    </Button>
                     <Button variant="contained" sx={{ ...FooterMainStyles.buttonStyle, ...HeaderMainStyles.logoutButton }} onClick={handleLogOut}>
                         {(customerId === "" || !customerId) ? "Sign in" : "Log out"}
                     </Button>

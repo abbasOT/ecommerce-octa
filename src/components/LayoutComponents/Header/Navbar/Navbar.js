@@ -6,12 +6,13 @@ import { Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/mate
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter, usePathname } from 'next/navigation'; // Import useRouter
 import { HeaderBarStyles, RegistrationStyles } from '@/components/Ui/Styles/Styles';
+import Link from 'next/link';
 
- const NavBar = () => {
+const NavBar = () => {
     const [currentPath, setCurrentPath] = useState('');
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const pathname = usePathname(); 
-    const router = useRouter(); 
+    const pathname = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         setCurrentPath(pathname);
@@ -20,7 +21,8 @@ import { HeaderBarStyles, RegistrationStyles } from '@/components/Ui/Styles/Styl
     const getLinkStyle = (path) => ({
         ...RegistrationStyles.linkStyle,
         ...HeaderBarStyles.navbarLinksColor,
-        ...(currentPath === path && { color: 'var(--primary-color)' })
+        ...(currentPath === path && { color: 'var(--primary-color)' }),
+
     });
 
     const toggleDrawer = (open) => (event) => {
@@ -36,23 +38,48 @@ import { HeaderBarStyles, RegistrationStyles } from '@/components/Ui/Styles/Styl
         router.push(path); // Navigate to the route
     };
 
+    // const renderLinks = () => (
+    //     <>
+    //         <span style={getLinkStyle("/")} onClick={() => handleNavigation("/")}>
+    //             Home
+    //         </span>
+    //         <span style={getLinkStyle("/shop")} onClick={() => handleNavigation("/shop")}>
+    //             Shop
+    //         </span>
+    //         <span style={getLinkStyle("/about")} onClick={() => handleNavigation("/about")}>
+    //             About Us
+    //         </span>
+    //         <span style={getLinkStyle("/contact")} onClick={() => handleNavigation("/contact")}>
+    //             Contact
+    //         </span>
+    //         {/* <span style={getLinkStyle("/track-order")} onClick={() => handleNavigation("/track-order")}>
+    //             Track Order
+    //         </span> */}
+    //     </>
+    // );
+
     const renderLinks = () => (
         <>
-            <span style={getLinkStyle("/")} onClick={() => handleNavigation("/")}>
-                Home
-            </span>
-            <span style={getLinkStyle("/shop")} onClick={() => handleNavigation("/shop")}>
-                Shop
-            </span>
-            <span style={getLinkStyle("/about")} onClick={() => handleNavigation("/about")}>
-                About Us
-            </span>
-            <span style={getLinkStyle("/contact")} onClick={() => handleNavigation("/contact")}>
-                Contact
-            </span>
-            {/* <span style={getLinkStyle("/track-order")} onClick={() => handleNavigation("/track-order")}>
-                Track Order
-            </span> */}
+            <Link href="/" passHref>
+                <a style={{ ...getLinkStyle("/"), textDecoration: 'none' }} onClick={() => handleNavigation("/")}>
+                    Home
+                </a>
+            </Link>
+            <Link href="/shop" passHref>
+                <a style={{ ...getLinkStyle("/shop"), textDecoration: 'none' }} onClick={() => handleNavigation("/shop")}>
+                    Shop
+                </a>
+            </Link>
+            <Link href="/about" passHref>
+                <a style={{ ...getLinkStyle("/about"), textDecoration: 'none' }} onClick={() => handleNavigation("/about")}>
+                    About Us
+                </a>
+            </Link>
+            <Link href="/contact" passHref>
+                <a style={{ ...getLinkStyle("/contact"), textDecoration: 'none' }} onClick={() => handleNavigation("/contact")}>
+                    Contact
+                </a>
+            </Link>
         </>
     );
 

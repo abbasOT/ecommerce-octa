@@ -6,6 +6,7 @@ import { CategoriesCardStyles, DisplayProductsStyles } from '@/components/Ui/Sty
 import { setSelectedCategory, fetchCategories, setSelectedCategoryWithProducts, } from '../../../redux/slices/categoriesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import medusa from '@/medusaClient';
+import { searchValues } from '@/redux/slices/searchBar';
 export default function CategoriesCard() {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -20,7 +21,7 @@ export default function CategoriesCard() {
 
     const handleCategoryClick = (categoryName) => {
         // Redirect to shop page with selected category ID
-        router.push(`/shop`);
+        dispatch(searchValues({ searchQuery: "" }));
         dispatch(setSelectedCategory(categoryName));
         // Find all products that belong to the selected category
         let productsInCategory = [];
@@ -33,6 +34,8 @@ export default function CategoriesCard() {
         });
         // Dispatch action to store products in Redux state
         dispatch(setSelectedCategoryWithProducts(productsInCategory));
+        router.push(`/shop`);
+
     };
 
     // Filter out categories that have a parent_category_id

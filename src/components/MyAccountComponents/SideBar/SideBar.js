@@ -8,7 +8,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 import { MyAccountStyles } from "@/components/Ui/Styles/Styles";
 
-function SideBar({ activeComponent, setActiveComponent }) {
+function SideBar({ activeComponent }) {
     const router = useRouter();
     const [selectedButton, setSelectedButton] = useState(activeComponent);
 
@@ -17,9 +17,8 @@ function SideBar({ activeComponent, setActiveComponent }) {
     }, [activeComponent]);
 
     const handleButtonClick = (component) => {
-        setActiveComponent(component);
         setSelectedButton(component);
-        router.push(`/my-account?activeComponent=${component}`, undefined, { shallow: true });
+        router.push(`/my-account/${component}`);
     };
 
     const isActive = (button) => selectedButton === button;

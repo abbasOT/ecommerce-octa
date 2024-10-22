@@ -1,9 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import Medusa from "@medusajs/medusa-js"
-
-const customerId = typeof window !== 'undefined' ? localStorage.getItem("customerId") : "";
-
 // const medusa = new Medusa({ baseUrl: "http://192.168.18.13:9000", maxRetries: 3 });
+
+// const customerId = typeof window !== 'undefined' ? localStorage.getItem("customerId") : "";
+
+const customerId = typeof window !== 'undefined' 
+    ? (localStorage.getItem("customerId") || sessionStorage.getItem("customerId")) 
+    : "";
+
 
 
 const initialState = {

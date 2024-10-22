@@ -6,7 +6,7 @@ import { FAQsStyles, ShopStyles, ProductDetailStyles } from '@/components/Ui/Sty
 import AppsIcon from '@mui/icons-material/Apps';
 import ViewStreamIcon from '@mui/icons-material/ViewStream';
 import { useSelector, useDispatch } from 'react-redux';
-import { setStockStatus, setSize, setColor, setAppliedPriceRange } from '@/redux/slices/filterProductsSlice';
+import { setStockStatus, setSize, setColor, setAppliedPriceRange, setSorting } from '@/redux/slices/filterProductsSlice';
 
 import React, { useState } from 'react'
 
@@ -19,9 +19,9 @@ function FilterTopBar() {
     const color = useSelector(state => state.filterProducts.color);
     const appliedPriceRange = useSelector(state => state.filterProducts.appliedPriceRange);
 
-    const [selectedDeviceType, setSelectedDeviceType] = useState("Select Device Type");
     const selectedCategory = useSelector((state) => state.categories.selectedCategory);
     const selectedCategoryProductCount = useSelector((state) => state.categories.selectedCategorywithProducts);
+    const sortingFilterValue = useSelector((state) => state.filterProducts.sorting)
 
     const handleDelete = (type, id) => {
         switch (type) {
@@ -35,7 +35,7 @@ function FilterTopBar() {
                 dispatch(setColor(color.filter(item => item !== id)));
                 break;
             case 'appliedPriceRange':
-                dispatch(setAppliedPriceRange([0, 900])); // Assuming default applied price range
+                dispatch(setAppliedPriceRange([])); // Assuming default applied price range
                 break;
             default:
                 break;
@@ -52,23 +52,24 @@ function FilterTopBar() {
                 <Box sx={ShopStyles.filterTopBarButtonBox}>
                     <Select
                         sx={{ ...ProductDetailStyles.productReviewsSelectField, ...ShopStyles.filterTopBarSelect }}
-                        id="deviceType"
-                        value={selectedDeviceType}
-                        onChange={(e) => setSelectedDeviceType(e.target.value)}
+                        id="sortingType"
+                        value={sortingFilterValue} // This should be the current value from Redux state
+                        onChange={(e) => dispatch(setSorting(e.target.value))}
                     >
-                        <MenuItem value="Select Device Type">
-                            <Typography component="span" sx={ShopStyles.filterTopBarSelectSpanTypo}>Sort By</Typography> Default
+                        <MenuItem value="default">
+                            {/* <Typography component="span" sx={ShopStyles.filterTopBarSelectSpanTypo}>Sort By</Typography> */}
+                            Default
                         </MenuItem>
-                        <MenuItem value="Single-Phase">Old</MenuItem>
-                        <MenuItem value="3-Phase">All</MenuItem>
+                        <MenuItem value="old">Old</MenuItem>
+                        <MenuItem value="new">New</MenuItem>
                     </Select>
 
-                    <Box sx={ShopStyles.filterTopBarIconBox}>
+                    {/* <Box sx={ShopStyles.filterTopBarIconBox}>
                         <AppsIcon />
                     </Box>
                     <Box sx={{ ...ShopStyles.filterTopBarIconBox, marginLeft: "-1.7rem", }}>
                         <ViewStreamIcon />
-                    </Box>
+                    </Box> */}
                 </Box>
             </Box>
 

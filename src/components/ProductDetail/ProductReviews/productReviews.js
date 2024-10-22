@@ -8,7 +8,7 @@ import ProductReviewForm from '../ProductReviewForm/ProductReviewForm';
 
 function ProductReviews() {
 
-    const [selectedDeviceType, setSelectedDeviceType] = useState("Select Device Type");
+    const [selectedSortingType, setSelectedSortingType] = useState("new");
     const product = useSelector((state) => state.product.selectedProduct);
     const [reviews, setReviews] = useState([]);
 
@@ -31,6 +31,24 @@ function ProductReviews() {
         }
     };
 
+
+    const sortReviews = (reviews, sortingType) => {
+        if (sortingType === "new") {
+            // Sort by newest first
+            return reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        } else if (sortingType === "old") {
+            // Sort by oldest first
+            return reviews.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        } else {
+            // Default case (if "default" or any unhandled value is selected)
+            return reviews;
+        }
+    };
+
+    const sortedReviews = sortReviews([...reviews], selectedSortingType); // Sorted reviews array
+
+
+
     return (
         <>
             <Box sx={{ ...DisplayProductsStyles.headingContainerBox, width: "100%" }}>
@@ -39,21 +57,25 @@ function ProductReviews() {
                 </Typography>
                 <Select
                     sx={ProductDetailStyles.productReviewsSelectField}
-                    id="deviceType"
-                    value={selectedDeviceType}
-                    onChange={(e) => setSelectedDeviceType(e.target.value)}
+                    id="sortingType"
+                    value={selectedSortingType}
+                    onChange={(e) => setSelectedSortingType(e.target.value)}
                 >
-                    <MenuItem value="Select Device Type">Newest</MenuItem>
-                    <MenuItem value="Single-Phase">Old</MenuItem>
-                    <MenuItem value="3-Phase">All</MenuItem>
+                    <MenuItem value="new">Newest</MenuItem>
+                    <MenuItem value="old">Old</MenuItem>
+                    <MenuItem value="all">All</MenuItem>
                 </Select>
 
             </Box>
 
             <Box sx={ProductDetailStyles.productReviewsContentContainerBox}>
-                <Box> {reviews.map((review) => (
+                <Box>
+                    {/* {reviews.map((review) => (
                     <ProductReviewCard key={review.id} review={review} />
-                ))}
+                ))} */}
+                    {sortedReviews.map((review) => (
+                        <ProductReviewCard key={review.id} review={review} />
+                    ))}
                 </Box>
                 <Box>
                     <ProductReviewForm />

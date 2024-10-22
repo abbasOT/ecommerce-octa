@@ -12,9 +12,9 @@ import { useRouter } from 'next/navigation';
 
 
 const Data = [
-    { id: 1, icon: RandD, title: "R&D", text: "R & D Based Customize Projects" },
-    { id: 2, icon: ElectronicsProjects, title: "Electronics Projects", text: "Product Designing (From Concept to Reality)" },
-    { id: 3, icon: PCB, title: "PCB Design", text: "Manufacturing Fabrication" }
+    { id: "R_and_D", icon: RandD, title: "R&D", text: "R & D Based Customize Projects" },
+    { id: "electronics_projects", icon: ElectronicsProjects, title: "Electronics Projects", text: "Product Designing (From Concept to Reality)" },
+    { id: "pcb_design", icon: PCB, title: "PCB Design", text: "Manufacturing Fabrication" },
 ];
 
 function ServiceCard() {

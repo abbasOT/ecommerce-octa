@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -11,19 +12,25 @@ function ForgetPassword() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
-    const handleForgetPassword = () => {
+
+
+    const handleForgetPassword = async () => {
         setMessage('');
         setError('');
 
-        medusa.customers.generatePasswordToken({ email })
+        medusa.customers.generatePasswordToken({
+            email: email
+        })
             .then(() => {
                 setMessage('Password reset link has been sent to your email.');
+                // localStorage.setItem('customerEmail', email)
             })
-            .catch((err) => {
-                setError('Failed to send password reset link. Please try again.');
-                console.error(err);
-            });
+            .catch(() => {
+                setError('Email not found. Please check the email address and try again.');
+            })
     };
+
+
 
     return (
         <>
@@ -59,6 +66,7 @@ function ForgetPassword() {
                     </form>
                 </Box>
             </Box>
+
         </>
     );
 }

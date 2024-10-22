@@ -7,9 +7,9 @@ import { AboutUsMainStyles, WhyChooseUsStyles, ProductDetailStyles } from '@/com
 // Data array containing descriptions
 const descriptions = [
     "Premium Quality",
-    "Versatile Wardrobe Staple",
-    "Available in Various Sizes",
-    "Tailored Fit"
+    "Sleek and Modern Design",
+    "Energy Efficient Performance",
+    "Durable and Long-Lasting Build"
 ];
 
 function ProductDescription() {
@@ -24,7 +24,7 @@ function ProductDescription() {
                 <Typography sx={{ ...AboutUsMainStyles.subTitleTypo, ...ProductDetailStyles.productDiscriptionPara }}>
                     {product?.description}
                 </Typography>
-                <Box component="ul" sx={ProductDetailStyles.productDiscriptionPointsBox}>
+                {/* <Box component="ul" sx={ProductDetailStyles.productDiscriptionPointsBox}>
                     {descriptions.map((description, index) => (
                         <li key={index}>
                             <Typography variant="body1" sx={{ ...AboutUsMainStyles.subTitleTypo, ...ProductDetailStyles.productDiscriptionPara }}>
@@ -32,7 +32,7 @@ function ProductDescription() {
                             </Typography>
                         </li>
                     ))}
-                </Box>
+                </Box> */}
             </Box>
         </>
     );

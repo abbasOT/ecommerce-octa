@@ -15,15 +15,6 @@ export async function POST(req) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        // Check if a review with the same email already exists
-        const existingReview = await prisma.review.findUnique({
-            where: { email },
-        });
-
-        if (existingReview) {
-            return NextResponse.json({ error: 'A review with this email already exists' }, { status: 409 });
-        }
-
         // Create a new review
         const newReview = await prisma.review.create({
             data: {

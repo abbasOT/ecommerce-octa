@@ -4,12 +4,13 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-      --font-family-primary: 'Inter';
-      --font-family-secondary: 'Poppins';
-      --primary-color: #2E838F;;
-
-  
+  --font-family-primary: 'Inter';
+  --font-family-secondary: 'Poppins';
+  --primary-color: #2E838F;
+  ;
 }
+
+
 
 
 * {
@@ -21,11 +22,13 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: none;
   background: #FDFDFD;
 }
 
- 
+a {
+  text-decoration: none !important;
+}
 
 
 .custom-divider {
@@ -43,13 +46,51 @@ body {
   text-transform: none;
 
 }
+
 .MuiTab-root.Mui-selected {
   color: #18181B;
   border-bottom: 2px solid #18181B;
- 
+
 }
 
 .MuiTabs-indicator {
   background-color: transparent;
   /* To make the default indicator transparent */
+}
+
+
+.swal2-confirm {
+  background: #2E838F !important;
+  border: none !important;
+  width: 80px !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.swal2-popup {
+  width: 500px !important;
+  /* Default width for larger screens */
+}
+
+
+@media (max-width: 900px) {
+  .swal2-popup {
+    width: 350px !important;
+    /* Reduced width for smaller screens */
+  }
+}
+
+
+@media (max-width: 600px) {
+  .swal2-popup {
+    width: 300px !important;
+    /* Reduced width for smaller screens */
+  }
+}
+
+@media (max-width: 400px) {
+  .swal2-popup {
+    width: 250px !important;
+    /* Further reduced width for very small screens */
+  }
 }

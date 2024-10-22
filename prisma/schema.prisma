@@ -1666,7 +1666,7 @@ model review {
   id            Int      @id @default(autoincrement())
   product_id    String
   name          String
-  email         String   @unique
+  email         String   // Removed @unique constraint here
   rating        Int
   comment       String
   createdAt     DateTime @default(now())
@@ -1685,6 +1685,14 @@ model wishlist {
   // Relations
   customer      customer @relation(fields: [customer_id], references: [id])
   product       product  @relation(fields: [product_id], references: [id])
+}
+
+model otpverification {
+  id        Int      @id @default(autoincrement())  // Auto-incrementing ID
+  otp       String   
+  email     String   
+  createdAt DateTime @default(now())  // Timestamp of when the record was created
+
 }
 
 

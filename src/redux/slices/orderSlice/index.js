@@ -18,6 +18,7 @@ const initialState = {
     paymentSecreenShotURL: '',
     status: 'pending',
     totalAmount: '',
+    subTotalAmount: '',
     items: []
 };
 

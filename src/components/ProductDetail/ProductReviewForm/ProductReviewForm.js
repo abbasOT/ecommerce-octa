@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import { Box, Typography, TextField, Button, NativeSelect } from '@mui/material'
 import { ContactFormStyles, FooterMainStyles, WhyChooseUsStyles, ProductCardStyles, DisplayProductsStyles, CategoriesCardStyles, BreadCrumbStyles, ProductDetailStyles } from '@/components/Ui/Styles/Styles'
 import axios from 'axios'
+import Swal from 'sweetalert2';
+
 
 function ProductReviewForm() {
 
@@ -14,6 +16,18 @@ function ProductReviewForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(true);
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const handleEmailChange = (e) => {
+        const inputEmail = e.target.value;
+        setEmail(inputEmail);
+
+        // Check if the email matches the regex pattern
+        setIsEmailValid(emailRegex.test(inputEmail));
+    };
 
     const handleChange = (event) => {
         setRating(parseInt(event.target.value, 10)); // Ensure rating is an integer
@@ -22,6 +36,26 @@ function ProductReviewForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        if (!isEmailValid || email === "") {
+            Swal.fire({
+                title: 'Invalid Email',
+                text: 'Please enter a valid email address.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
+            setIsSubmitting(false); // Stop submitting process
+            return;
+        }
+        if (!email || !name || !comment) {
+            Swal.fire({
+                title: "Error",
+                text: "Please fill in all the required fields.",
+                icon: "warning",
+                button: "OK",
+            });
+            setIsSubmitting(false); // Stop submitting process
+            return;
+        }
         try {
             const response = await fetch('/api/review/create', {
                 method: 'POST',
@@ -38,23 +72,34 @@ function ProductReviewForm() {
             });
 
             if (!response.ok) {
-                if (response.status === 409) {
-                    alert('A review with this email already exists.');
-                } else {
-                    alert('Failed to create review');
-                    console.log(response, response.body, "the response coming from API");
-                    throw new Error('Failed to create review');
-                }
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to create review',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+                console.log(response, response.body, "the response coming from API");
+                throw new Error('Failed to create review');
             } else {
                 const result = await response.json();
-                alert("Your Review Submitted Successfully!");
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Your Review Submitted Successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
                 setComment("");
                 setEmail("");
                 setName("");
                 console.log('Review created:', result);
             }
         } catch (error) {
-            alert("Error Submitted Review!");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to create review Connectivity Error',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
             console.error('Error creating review:', error);
         }
         finally {
@@ -92,7 +137,8 @@ function ProductReviewForm() {
                     type="email"
                     autoComplete="current-password"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    // onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
                     variant="standard"
                     fullWidth
                 />

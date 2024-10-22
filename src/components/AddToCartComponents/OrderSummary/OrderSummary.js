@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { styles } from '../../Ui/Styles/SecondaryStyles';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import medusa from '@/medusaClient';
 import { updateOrderValue } from '@/redux/slices/orderSlice';
 
@@ -21,6 +22,7 @@ export default function OrderSummary({ subtotal, tax, ship, total, isDisabled })
     const [regions, setRegions] = useState([]);
 
     dispatch(updateOrderValue({ name: 'items', value: cartItems }));
+    dispatch(updateOrderValue({ name: 'subTotalAmount', value: total }))
 
 
     // Fetch all regions when the component mounts
@@ -28,6 +30,7 @@ export default function OrderSummary({ subtotal, tax, ship, total, isDisabled })
         const fetchRegions = async () => {
             try {
                 const response = await medusa.regions.list(); // Replace with your actual API call to get regions
+                console.log(response, "the regions i am looking for")
                 setRegions(response.regions); // Adjust according to the API response structure
             } catch (error) {
                 console.error("Error fetching regions:", error);
@@ -74,11 +77,23 @@ export default function OrderSummary({ subtotal, tax, ship, total, isDisabled })
                 // Now, await the result of adding line items to ensure it completes
                 await addLineItemsToCart(cart.id);
             }
-            alert("Your cart has been updated.");
+            Swal.fire({
+                title: 'Success!',
+                text: 'Your cart has been updated.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                router.push('/order-detail');
+            });
+            // alert("Your cart has been updated.");
             setLoading(false); // Stop loading when done
-            router.push('/order-detail');
-
         } catch (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'There was an issue updating your cart. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
             console.error("Error creating or updating cart:", error);
             setLoading(false); // Stop loading when done
 
@@ -111,8 +126,15 @@ export default function OrderSummary({ subtotal, tax, ship, total, isDisabled })
 
         if (customerId === "") {
             console.log("Customer ID is missing. Cannot proceed with order creation.");
-            alert("Please log in to create an order.");
-            router.push('/login');
+            // alert("Please log in to create an order.");
+            Swal.fire({
+                title: 'Login Required',
+                text: 'Please log in to create an order.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                router.push('/login'); // Redirect to login after confirmation
+            });
         } else {
             if (regions.length > 0) {
                 const regionId = regions[0].id; // Choose the appropriate region ID
@@ -121,8 +143,6 @@ export default function OrderSummary({ subtotal, tax, ship, total, isDisabled })
                 console.error("No regions available to create a cart.");
             }
         }
-
-
     };
 
 
@@ -137,16 +157,23 @@ export default function OrderSummary({ subtotal, tax, ship, total, isDisabled })
                 <Grid item sx={styles.section2} >
                     <Typography style={styles.bold}>Order Summary</Typography>
                     <Typography style={styles.colsptxt}>Discount Code/Promo Code</Typography>
-                    <TextField placeholder='Code' sx={styles.txtfld} disabled={isDisabled} />
+                    <TextField placeholder='Code' sx={styles.txtfld}
+                        // disabled={isDisabled}
+                        disabled
+                    />
                     <Typography style={styles.colsptxt}>Your bonus card number</Typography>
                     <TextField
                         placeholder="Enter card Number"
                         sx={styles.txtfld}
-                        disabled={isDisabled}
+                        // disabled={isDisabled}
+                        disabled
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <Button variant="contained" style={styles.apbtn} disabled={isDisabled}>
+                                    <Button variant="contained" style={styles.apbtn}
+                                        //  disabled={isDisabled}
+                                        disabled
+                                    >
                                         Apply
                                     </Button>
                                 </InputAdornment>

@@ -12,13 +12,22 @@ import Image from 'next/image';
 
 export default function ShoppingCart({ cartItems, handleUpdateQuantity, }) {
 
+
+
+    const truncateTitle = (title) => {
+        if (title.length > 20) {
+            return title.substring(0, 20) + '...';
+        }
+        return title;
+    };
+
     return (
         <>
             <Box style={styles.pd}>
                 <Typography sx={styles.bold}>Shopping Cart</Typography>
                 {cartItems.map((product, index) => {
                     const amount = product?.variants[0]?.prices[0]?.amount
-                    const amountPKR = amount ? amount * 280 : 0;
+                    const amountPKR = amount ? amount : 0;
                     const subTotal = amountPKR.toFixed(2)
 
                     const productTotal = subTotal * product.quantity;
@@ -32,7 +41,7 @@ export default function ShoppingCart({ cartItems, handleUpdateQuantity, }) {
                                     </Box>
                                     <Box sx={styles.orderTrackSummaryCardPrductTypoBox}>
                                         <Typography sx={{ ...styles.bold, ...styles.typoFont }}>
-                                            {product.title}
+                                            {truncateTitle(product?.title)}
                                         </Typography>
                                         <Typography sx={styles.orderTrackSummaryCardTotalItems}>
                                             {product.quantity} item{product.quantity > 1 ? 's' : ''}

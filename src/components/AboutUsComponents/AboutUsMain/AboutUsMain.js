@@ -13,7 +13,7 @@ function AboutUsMain() {
                     Powering Your Innovation from <br /> Concept  to Creation
                 </Typography>
                 <Typography sx={AboutUsMainStyles.subTitleTypo} >
-                    Node is your one-stop shop for turning your electrical, electronics, robotics, and mechatronics ideas into reality. Founded by passionate engineers, we offer a vast selection of cutting-edge products at competitive prices to suit every vision and skill level, from hobbyists to professional engineers.
+                    Circuithub.pk is your one-stop shop for turning your electrical, electronics, robotics, and mechatronics ideas into reality. Founded by passionate engineers, we offer a vast selection of cutting-edge products at competitive prices to suit every vision and skill level, from hobbyists to professional engineers.
                 </Typography>
             </Box>
 
@@ -21,7 +21,7 @@ function AboutUsMain() {
 
             <Box sx={AboutUsMainStyles.secondTypoBox}>
                 <Typography sx={{ ...WhyChooseUsStyles.WhyChooseUsTitle, ...AboutUsMainStyles.firstTypoTitle, ...AboutUsMainStyles.secondTypoTitle }}>
-                    Some of Node’s Impressive Services:
+                    Some Impressive Services We Offer:
                 </Typography>
                 <Box component="ul" sx={AboutUsMainStyles.listBox}>
                     {services.map((service) => (
@@ -38,7 +38,7 @@ function AboutUsMain() {
                     More Than Just Products
                 </Typography>
                 <Typography sx={AboutUsMainStyles.subTitleTypo} >
-                    At Node, we go beyond just supplying parts. We are committed to your project&apos;s success, offering a comprehensive suite of services including:
+                    At Circuithub.pk, we go beyond just supplying parts. We are committed to your project&apos;s success, offering a comprehensive suite of services including:
                 </Typography>
                 <Box component="ul" sx={{ ...AboutUsMainStyles.listBox, pt: 0 }}>
                     {extendedServices.map((service) => (

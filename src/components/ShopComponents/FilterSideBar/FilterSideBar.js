@@ -101,16 +101,16 @@ function FilterSideBar() {
                 </Box>
             </Box>
 
-            {/* <FilterOption title="Stock Status" options={stockStatusOptions} onChange={handleStockStatusChange} />
-            <FilterOption title="By Size" options={sizeOptions} onChange={handleSizeChange} />
-            <FilterOption title="By Color" options={colorOptions} onChange={handleColorChange} /> */}
+            {/* <FilterOption title="Stock Status" options={stockStatusOptions} onChange={handleStockStatusChange} /> */}
+            {/* <FilterOption title="By Size" options={sizeOptions} onChange={handleSizeChange} /> */}
+            {/* <FilterOption title="By Color" options={colorOptions} onChange={handleColorChange} /> */}
 
 
-            <FilterOption title="Stock Status" options={stockStatusOptions} selectedOptions={selectedStockStatus} onChange={handleStockStatusChange} />
-            <FilterOption title="By Size" options={sizeOptions} selectedOptions={selectedSize} onChange={handleSizeChange} />
-            <FilterOption title="By Color" options={colorOptions} selectedOptions={selectedColor} onChange={handleColorChange} />
+            {/* <FilterOption title="Stock Status" options={stockStatusOptions} selectedOptions={selectedStockStatus} onChange={handleStockStatusChange} /> */}
+            {/* <FilterOption title="By Size" options={sizeOptions} selectedOptions={selectedSize} onChange={handleSizeChange} /> */}
+            {/* <FilterOption title="By Color" options={colorOptions} selectedOptions={selectedColor} onChange={handleColorChange} /> */}
 
-            <Box sx={DisplayProductsStyles.headingContainerBox}>
+            {/* <Box sx={DisplayProductsStyles.headingContainerBox}>
                 <Typography sx={{ ...CategoriesCardStyles.listItemText, ...ShopStyles.shopFilterOptionTypo }}>Top Rated Products</Typography>
                 <ExpandMoreIcon />
             </Box>
@@ -118,7 +118,7 @@ function FilterSideBar() {
                 <Image src={ProductImg} width={80} />
                 <Image src={ProductImg} width={80} />
                 <Image src={ProductImg} width={80} />
-            </Box>
+            </Box> */}
         </Box>
     );
 }

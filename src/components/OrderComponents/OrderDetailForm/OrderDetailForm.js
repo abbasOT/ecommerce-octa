@@ -1,7 +1,7 @@
 "use client"
 
-
 import React, { useState } from 'react'
+import { CldUploadButton } from 'next-cloudinary';
 import { Grid, InputLabel, TextField, Box, Button, Typography, Divider, Select, MenuItem, Checkbox, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material'
 import { FooterMainStyles, ContactFormStyles, WhyChooseUsStyles, RegistrationStyles, CategoriesCardStyles, FAQsStyles, OrderStyles } from '@/components/Ui/Styles/Styles'
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
@@ -26,7 +26,7 @@ function OrderDetailForm() {
         { value: 'Pay by Card Credit', label: 'Pay by Card Credit', icon: <CreditCardOutlinedIcon /> },
         { value: 'Jazz Cash', label: 'Jazz Cash' },
         { value: 'Easy paisa', label: 'Easy paisa' },
-        { value: 'Paypal', label: 'Paypal' }
+        { value: 'Cash on Delivery', label: 'Cash on Delivery' }
     ];
 
     const handlePaymentMethodChange = (event) => {
@@ -34,12 +34,13 @@ function OrderDetailForm() {
         dispatch(updateOrderValue({ name: 'paymentMethod', value }));
     };
 
-
     const handleUpload = (result) => {
         if (result.event === 'success') {
-            dispatch(updateOrderValue({ name: 'paymentSecreenShotURL', value: result.info.secure_url }));
+            dispatch(updateOrderValue({ name: 'paymentScreenShotURL', value: result.info.secure_url }));
         }
     };
+
+
 
     return (
 
@@ -119,7 +120,7 @@ function OrderDetailForm() {
                         variant="outlined"
                         autoComplete="off"
                         onChange={handleChangeValues}
-                        inputProps={OrderStyles.orderDetailFormFieldInputProps}
+                        inputProps={{ ...OrderStyles.orderDetailFormFieldInputProps, maxLength: 40 }}
                         fullWidth
                     />
 
@@ -132,7 +133,7 @@ function OrderDetailForm() {
             <Typography sx={{ ...FAQsStyles.title, ...OrderStyles.orderDetailFormTitleTypo }}>Shipping Address</Typography>
             <Box sx={FooterMainStyles.firstGrid}>
                 <Box sx={ContactFormStyles.fieldBox}>
-                    <InputLabel sx={CategoriesCardStyles.listItemText} >STREET ADDRESS *</InputLabel>
+                    <InputLabel sx={CategoriesCardStyles.listItemText} >STREET ADDRESS</InputLabel>
 
                     <TextField
                         sx={RegistrationStyles.textField}
@@ -144,17 +145,14 @@ function OrderDetailForm() {
                         variant="outlined"
                         autoComplete="off"
                         onChange={handleChangeValues}
-                        inputProps={OrderStyles.orderDetailFormFieldInputProps}
-
+                        inputProps={{ ...OrderStyles.orderDetailFormFieldInputProps, maxLength: 60 }}
                         fullWidth
-
-
                     />
 
                 </Box>
 
                 <Box sx={ContactFormStyles.fieldBox}>
-                    <InputLabel sx={CategoriesCardStyles.listItemText} >COUNTRY *</InputLabel>
+                    <InputLabel sx={CategoriesCardStyles.listItemText} >COUNTRY</InputLabel>
 
 
                     <Select
@@ -174,7 +172,7 @@ function OrderDetailForm() {
 
                 </Box>
                 <Box sx={ContactFormStyles.fieldBox}>
-                    <InputLabel sx={CategoriesCardStyles.listItemText} >TOWN / CITY *</InputLabel>
+                    <InputLabel sx={CategoriesCardStyles.listItemText} >TOWN / CITY</InputLabel>
                     <TextField
 
                         sx={RegistrationStyles.textField}
@@ -225,7 +223,7 @@ function OrderDetailForm() {
                                 autoComplete="off"
                                 onChange={handleChangeValues}
                                 type="name"
-                                inputProps={OrderStyles.orderDetailFormFieldInputProps}
+                                inputProps={{ ...OrderStyles.orderDetailFormFieldInputProps, maxLength: 5 }}
                                 variant="outlined"
                                 fullWidth
                             />
@@ -274,7 +272,7 @@ function OrderDetailForm() {
                 <Divider sx={OrderStyles.orderDetailFormDividerStyle}></Divider>
             </Box>
             <Box sx={FooterMainStyles.firstGrid}>
-                <Box sx={ContactFormStyles.fieldBox}>
+                {/* <Box sx={ContactFormStyles.fieldBox}>
                     <InputLabel sx={CategoriesCardStyles.listItemText} >REFRENCE NUMBER</InputLabel>
                     <TextField
 
@@ -290,12 +288,12 @@ function OrderDetailForm() {
                         variant="outlined"
                         fullWidth
                     />
-                </Box>
+                </Box> */}
 
 
                 <Box sx={ContactFormStyles.fieldBox}>
                     <InputLabel sx={CategoriesCardStyles.listItemText}>PAYMENT SCREENSHOT</InputLabel>
-               
+                    <CldUploadButton style={buttonStyle} uploadPreset="Ecommerce_Octa" onUpload={handleUpload} />
 
                 </Box>
             </Box>

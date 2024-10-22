@@ -4,6 +4,7 @@ import { ContactFormStyles, FAQsStyles } from '@/components/Ui/Styles/Styles'
 import { Typography, Grid, Box, TextField, Button, InputLabel, useMediaQuery, CircularProgress } from '@mui/material'
 import { FooterMainStyles, RegistrationStyles, WhyChooseUsStyles, } from '@/components/Ui/Styles/Styles'
 import { useFormik } from "formik";
+import Swal from 'sweetalert2';
 import * as Yup from "yup";
 
 import React, { useState } from 'react'
@@ -44,18 +45,36 @@ function GetInTouch() {
 
                 if (response.ok) {
                     console.log("Email sent successfully");
-                    alert("Email sent successfully")
+                    // alert("Email sent successfully")
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Email sent successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
                     setLoading(false);
                     // Optionally show a success message to the user
                 } else {
                     console.error("Error sending email");
-                    alert("Error sending email")
+                    // alert("Error sending email")
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to send email. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     setLoading(false);
                     // Optionally show an error message to the user
                 }
             } catch (error) {
                 console.error("Error:", error);
-                alert("Error sending email")
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while sending the email.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                // alert("Error sending email")
                 setLoading(false);
             }
         },
@@ -83,7 +102,7 @@ function GetInTouch() {
 
                             />
                             {formik.touched.name && formik.errors.name ? (
-                                <div style={RegistrationStyles.requiredStyle}>{formik.errors.name}</div>
+                                <Typography sx={RegistrationStyles.requiredStyle}>{formik.errors.name}</Typography>
                             ) : null}
                         </Box>
                         <Box sx={ContactFormStyles.fieldBox}>
@@ -104,7 +123,7 @@ function GetInTouch() {
 
                             />
                             {formik.touched.email && formik.errors.email ? (
-                                <div style={RegistrationStyles.requiredStyle}>{formik.errors.email}</div>
+                                <Typography sx={RegistrationStyles.requiredStyle}>{formik.errors.email}</Typography>
                             ) : null}
                         </Box>
 
@@ -128,9 +147,9 @@ function GetInTouch() {
 
                             />
                         </Box>
-                        {/* {formik.touched.message && formik.errors.message ? (
-                            <div style={RegistrationStyles.requiredStyle}>{formik.errors.message}</div>
-                        ) : null} */}
+                     {formik.touched.message && formik.errors.message ? (
+                            <Typography sx={RegistrationStyles.requiredStyle}>{formik.errors.message}</Typography>
+                        ) : null} 
 
                         <Box sx={ContactFormStyles.buttonBox} >
                             <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, minWidth: 250 }} disabled={loading} >

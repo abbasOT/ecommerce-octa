@@ -15,6 +15,7 @@ function Wishlist() {
     const customerId = useSelector((state) => state.medusaConfig.customer_id);
     const allProducts = useSelector((state) => state.product.allProducts);
     const [customerWishList, setCustomerWishList] = useState([])
+
     console.log(wishList, "redux wishlist")
 
 
@@ -45,6 +46,10 @@ function Wishlist() {
         ? wishList
         : customerWishList.map(wishlistItem => {
             const matchingProduct = allProducts.find(product => product.id === wishlistItem.product_id);
+            if (matchingProduct) {
+                // Add the createdAt from wishlistItem to the matching product
+                return { ...matchingProduct, createdAt: wishlistItem.createdAt };
+            }
             return matchingProduct;
         }).filter(product => product !== undefined);
 
@@ -58,16 +63,6 @@ function Wishlist() {
             dispatch(removeProductFromWishList(productId));
         } else {
             try {
-                // Call the API to remove from the database if there's a customerId
-                // const response = await fetch('/api/wishlist/delete', {
-                //     method: 'DELETE',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({ productId: productId, customerId: customerId }), // Include customerId in the request
-                // });
-
-
                 const response = await fetch('/api/wishlist/delete', {
                     method: 'DELETE',
                     headers: {
@@ -97,6 +92,18 @@ function Wishlist() {
         dispatch(removeProductFromWishList(product.id));
     };
 
+    const formatDate = (dateString) => {
+        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', options);
+    };
+
+    const truncateTitle = (title) => {
+        if (title.length > 20) {
+            return title.substring(0, 20) + '...';
+        }
+        return title;
+    };
 
 
     return (
@@ -112,10 +119,10 @@ function Wishlist() {
                         </Box>
                         <Box sx={MyAccountStyles.typoBox}>
                             <Typography sx={{ ...WhyChooseUsStyles.WhyChooseUsTitle, ...ProductCardStyles.descriptionTypo, ...ProductCardStyles.typoFont }}>
-                                {product?.title}
+                                {truncateTitle(product?.title)}
                             </Typography>
                             <Typography sx={{ ...WhyChooseUsStyles.WhyChooseUsTitle, ...ProductCardStyles.descriptionTypo, ...MyAccountStyles.typoFontSize, color: "#5C5F6A" }}>
-                                Added on: 27 July 2023
+                                Added on:  {formatDate(product?.createdAt)}
                             </Typography>
                             <Typography sx={{ ...WhyChooseUsStyles.WhyChooseUsTitle, ...ProductCardStyles.descriptionTypo, ...ProductCardStyles.typoFont, ...MyAccountStyles.typoFontSize }}>
                                 In stock
@@ -124,7 +131,7 @@ function Wishlist() {
                     </Box>
                     <Box sx={MyAccountStyles.secondBoxWishlist}>
                         <Typography sx={MyAccountStyles.orderPriceTypo}>
-                            ${product?.variants[0].prices[0].amount / 100}
+                            PKR{product?.variants[0].prices[0].amount}
                         </Typography>
                         <Box sx={{ ...ContactFormStyles.buttonBox, ...MyAccountStyles.buttonBox }} >
                             <Button variant="contained" type='submit' sx={{ ...FooterMainStyles.buttonStyle, ...ContactFormStyles.sendMessageButton, ...MyAccountStyles.viewItemButton }} onClick={() => handleAddtoCart(product)}>Add to cart</Button>

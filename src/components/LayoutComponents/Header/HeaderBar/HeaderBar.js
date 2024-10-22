@@ -10,23 +10,29 @@ import Facebook from "../../../Ui/Assets/Header/Facebook.svg"
 import Image from 'next/image';
 import { HeaderBarStyles } from '@/components/Ui/Styles/Styles';
 
+
 function HeaderBar() {
+
     return (
         <Box sx={HeaderBarStyles.containerBox}>
             <Box sx={HeaderBarStyles.socialIconsBox}>
-                <Image src={Facebook} />
-                <InstagramIcon sx={HeaderBarStyles.iconColor} />
-                <TwitterIcon sx={HeaderBarStyles.iconColor} />
-                <LinkedInIcon sx={HeaderBarStyles.iconColor} />
+                <a href="https://www.facebook.com/circuithubpk" target="_blank" rel="noopener noreferrer">
+                    <Image src={Facebook} alt="Facebook" />
+                </a>
+                <a href="https://www.linkedin.com/company/circuit-hub" target="_blank" rel="noopener noreferrer">
+                    <LinkedInIcon sx={HeaderBarStyles.iconColor} />
+                </a>
+                {/* <InstagramIcon sx={HeaderBarStyles.iconColor} /> */}
+                {/* <TwitterIcon sx={HeaderBarStyles.iconColor} /> */}
             </Box>
             <Box sx={HeaderBarStyles.buttonsBox}>
-                <Button variant="text" sx={HeaderBarStyles.buttonStyle}>
+                <Button variant="text" sx={HeaderBarStyles.buttonStyle} onClick={() => window.location.href = 'mailto:sales@circuithub.com'}>
                     <MailOutlineIcon />
-                    <span className="buttonText">Info@example.com</span>
+                    <span className="buttonText">sales@circuithub.com</span>
                 </Button>
-                <Button variant="text" sx={HeaderBarStyles.buttonStyle}>
+                <Button variant="text" sx={HeaderBarStyles.buttonStyle} onClick={() => window.location.href = 'tel:+92518773179'}>
                     <AddIcCallIcon />
-                    <span className="buttonText">(303) 555-0105</span>
+                    <span className="buttonText">051 877 3179</span>
                 </Button>
             </Box>
         </Box>

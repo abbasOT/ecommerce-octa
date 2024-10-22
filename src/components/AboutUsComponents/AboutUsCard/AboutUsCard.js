@@ -26,7 +26,7 @@ export default function AboutUsCard() {
                     Empowering Every Project, Big or Small
                 </Typography>
                 <Typography sx={AboutUsCardStyles.subTitle}>
-                    More than just a store, Node is your partner in innovation. Let&apos;s make your ideas take flight!
+                    More than just a store, Circuithub.pk is your partner in innovation. Let&apos;s make your ideas take flight!
                 </Typography>
                 <Box sx={AboutUsCardStyles.buttonBox} >
                     <Button variant='text' sx={{ ...DisplayProductsStyles.viewAllButton, ...AboutUsCardStyles.shopNowButton }} onClick={handleShopNow} >

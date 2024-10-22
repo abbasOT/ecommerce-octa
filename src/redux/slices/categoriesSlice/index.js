@@ -58,7 +58,7 @@ const categoriesSlice = createSlice({
     name: 'categories',
     initialState: {
         allCategories: [],
-        selectedCategory: "Accessories",
+        selectedCategory: "",
         allCategoriesWithProducts: [],
         selectedCategorywithProducts: [],
     },

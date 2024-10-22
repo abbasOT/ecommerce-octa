@@ -1,30 +1,30 @@
 "use client"
 
 export const FAQsData = {
-    "Front End": {
+    "CircuitHub": {
         0: {
-            heading: "What is Material-UI and how is it used in front-end projects?",
-            description: "Material-UI is a popular React UI framework that implements Google's Material Design. It provides ready-to-use components and styles for building modern, responsive user interfaces. In front-end projects, Material-UI simplifies the development process by offering pre-designed components like buttons, inputs, and navigation elements, along with a consistent design language."
+            "heading": "What products does CircuitHub offer for electronics enthusiasts?",
+            "description": "CircuitHub is an online electronics store offering a wide range of products including printed circuit boards (PCBs), microcontrollers, sensors, capacitors, and various other electronic components. Our products cater to hobbyists, engineers, and professionals in the electronics industry, providing high-quality materials for projects and prototyping."
         },
         1: {
-            heading: "How does Material-UI enhance the user experience?",
-            description: "Material-UI enhances the user experience by providing visually appealing and interactive components that adhere to Material Design principles. These components offer smooth animations, responsive behavior, and accessibility features, ensuring a seamless and engaging user interface."
+            "heading": "Why choose CircuitHub for your electronic component needs?",
+            "description": "CircuitHub stands out by offering a curated selection of high-quality electronic components sourced from trusted manufacturers. Our extensive catalog ensures that you find exactly what you need for your projects, whether it's for prototyping, small-scale production, or full-scale manufacturing."
         },
         2: {
-            heading: "Can Material-UI be customized to match brand styles?",
-            description: "Yes, Material-UI offers extensive customization options to match brand styles. You can easily modify the theme colors, typography, spacing, and other design attributes to align with your brand identity. Additionally, Material-UI provides styling solutions such as CSS-in-JS, theming, and global styles to achieve the desired look and feel."
+            "heading": "Does CircuitHub provide customized electronic components?",
+            "description": "Yes, CircuitHub offers customized PCB design and assembly services, allowing customers to tailor components to their specific project requirements. Our platform makes it easy to upload custom designs and receive professional-grade components with quick turnaround times."
         },
         3: {
-            heading: "What are some other popular CSS frameworks/libraries used in front-end development?",
-            description: "Besides Material-UI, there are several other popular CSS frameworks and libraries used in front-end development, such as Bootstrap, Tailwind CSS, Semantic UI, and Foundation. These frameworks provide pre-designed components, responsive layouts, and utility classes to streamline the development process and maintain consistency across projects."
+            "heading": "What are some of the top categories available at CircuitHub?",
+            "description": "At CircuitHub, we offer top categories such as PCBs, sensors, microcontrollers, power supplies, and semiconductors. Our inventory is constantly updated to include the latest innovations in electronics, ensuring that customers have access to the newest technology on the market."
         },
         4: {
-            heading: "How do CSS frameworks contribute to responsive web design?",
-            description: "CSS frameworks like Material-UI and Bootstrap offer responsive grid systems and utility classes that enable developers to create layouts that adapt to different screen sizes and devices. By leveraging these features, front-end developers can ensure that their web applications are accessible and user-friendly on desktops, tablets, and mobile devices."
+            "heading": "How does CircuitHub ensure the quality of its electronic components?",
+            "description": "CircuitHub partners with industry-leading manufacturers and conducts rigorous quality control checks to ensure that every component meets the highest standards. From sourcing to shipping, we ensure that only reliable, durable, and fully tested products reach our customers."
         },
         5: {
-            heading: "What are the advantages of using Material-UI over other CSS frameworks?",
-            description: "Material-UI offers several advantages over other CSS frameworks, including comprehensive React integration, robust documentation, active community support, and seamless compatibility with Material Design guidelines. Additionally, Material-UI's component-based architecture promotes code reusability, modularity, and maintainability, making it a preferred choice for front-end development."
+            "heading": "What are the benefits of shopping with CircuitHub?",
+            "description": "Shopping with CircuitHub offers several benefits including competitive pricing, a wide selection of products, fast shipping, and excellent customer support. Additionally, we provide educational resources and project guides to help customers make informed decisions and get the most out of their electronic components."
         }
     },
     PCB: {

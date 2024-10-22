@@ -19,9 +19,11 @@ function ProductDetailPage() {
             <NavBar />
             <BreadCrumb />
             <ProductDetailMain />
-            <Box sx={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
 
-                <DisplayProducts heading={"Similar Products"} />
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+                <Box sx={{ width: { md: '80%', xs: "100%" }, }}>
+                    <DisplayProducts heading={"Similar Products"} />
+                </Box>
             </Box>
             <FooterBar />
             <FooterMain />

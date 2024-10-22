@@ -1,19 +1,21 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Typography, Button } from '@mui/material'
 import { RegistrationStyles, FooterMainStyles, ContactFormStyles, orderStatusCardStyles } from '@/components/Ui/Styles/Styles'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import OrderComplete from "../../Ui/Assets/Order/orderComplete.svg"
 import OrderFailed from "../../Ui/Assets/Order/orderError.svg"
 import { useRouter } from 'next/navigation';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image'
+import { clearCart } from '@/redux/slices/productSlice';
 
 
 function OrderFinalStatusCard({ bgStripColor, imgName, title, actionButtonName }) {
 
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const orderImage = imgName === "OrderFailed" ? OrderFailed : OrderComplete
     const currentOrderDetails = useSelector((state) => state.order);
@@ -22,6 +24,13 @@ function OrderFinalStatusCard({ bgStripColor, imgName, title, actionButtonName }
         month: 'long',
         day: 'numeric'
     });
+    const totalAmount = currentOrderDetails.totalAmount
+
+    useEffect(() => {
+        if (actionButtonName === "Continue Shopping") {
+            dispatch(clearCart()); // Clear cart only when the actionButtonName is not "Continue Shopping"
+        }
+    }, [actionButtonName]);
 
     const handleActionbutton = () => {
         router.push(actionButtonName === "Continue Shopping" ? '/shop' : '/add-to-cart');
@@ -29,7 +38,7 @@ function OrderFinalStatusCard({ bgStripColor, imgName, title, actionButtonName }
 
     const orderDetails = [
         { label: "Date:", value: formattedDate },
-        { label: "Total:", value: currentOrderDetails.totalAmount },
+        { label: "Total:", value: totalAmount },
         { label: "Payment method:", value: currentOrderDetails.paymentMethod }
     ];
 

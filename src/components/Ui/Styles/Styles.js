@@ -3,7 +3,7 @@
 
 export const RegistrationStyles = {
     LogoBox: {
-        position: { lg: "absolute", md: "relative" }, top: "1rem", left: 0, marginLeft: { lg: "5rem", sm: "0rem" }, marginBottom: "1rem", textAlign: "start"
+        position: { lg: "absolute", md: "relative" }, top: "1rem", left: 0, marginLeft: { lg: "5rem", sm: "0rem" }, marginBottom: "1rem", textAlign: "start", cursor: "pointer"
     },
     outerBox: {
         display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "3rem 0.5rem 5rem 0.5rem", height: "100%", position: "relative"
@@ -21,6 +21,7 @@ export const RegistrationStyles = {
         '& .MuiInputBase-root.MuiOutlinedInput-root': {
             borderRadius: "0.5rem",
             border: '1px solid #E4E4E7',
+            fontSize: { md: "1rem", sm: "0.8rem", xs: "0.75rem" },
             color: "#52525B",
             fontFamily: 'var(--font-family-secondary)',
             margin: "0.5rem 0rem 1rem 0rem",
@@ -69,10 +70,21 @@ export const RegistrationStyles = {
         },
     },
     checkBoxTypo: {
-        margin: "0rem", paddingTop: "0.6rem", color: "#090914", fontWeight: 400, textAlign: "left"
+        margin: "0rem", paddingTop: "0.6rem", color: "#090914", fontWeight: 400, textAlign: "left", fontSize: { sm: "1rem", xs: "0.8rem" }
     },
-    ForgetPasswordLinkTypo: { fontWeight: 500, paddingTop: "0.6rem", },
-    requiredStyle: { display: "flex", alignItems: "center", textAlign: "start", color: "red", whiteSpace: "wrap" }
+    ForgetPasswordLinkTypo: { fontWeight: 500, paddingTop: "1rem", fontSize: { sm: "1rem", xs: "0.8rem" } },
+    requiredStyle: { display: "flex", alignItems: "center", textAlign: "start", color: "red", whiteSpace: "wrap", fontSize: { sm: "1rem", xs: "0.8rem" }, },
+    passwordEyeBox: {
+        position: 'absolute',
+        color: "#000",
+        top: '48%',
+        right: '5%',
+        transform: 'translateY(-50%)',
+        cursor: 'pointer',
+        opacity: '50%',
+        display: 'flex',
+        alignItems: 'center',
+    },
 
 }
 
@@ -101,7 +113,8 @@ export const HeaderBarStyles = {
 
     },
     navbarLinksColor: {
-        color: "#333E48"
+        color: "#333E48",
+
     },
     navbarLinksBox: {
         display: { xs: 'none', sm: 'flex' }, justifyContent: "center", alignItems: "center", background: "#EEEEEE", gap: "2rem", padding: "0.5rem 2rem"
@@ -171,7 +184,7 @@ export const FooterMainStyles = {
         width: { md: "70%", sm: "90%", xs: "90%" }, fontSize: { sm: "1rem", xs: "0.8rem" }, paddingTop: "0.5rem", textAlign: { md: "start", sm: "center", xs: "center" }
     },
     textFieldBox: {
-        width: { lg: "70%", md: "80%", sm: "60%", xs: "90%" }, paddingTop: "1rem"
+        width: { lg: "60%", md: "80%", sm: "60%", xs: "90%" }, paddingTop: "1rem"
     },
     textFieldStyle: {
         '& .MuiInputBase-root.MuiOutlinedInput-root': {
@@ -450,7 +463,7 @@ export const HeadingBarStyles = {
 
 export const DisplayProductsStyles = {
     containerBox: {
-        display: "flex", flexDirection: "column", padding: "1rem 2rem"
+        display: "flex", flexDirection: "column", padding: { sm: "1rem 2rem", xs: "1rem 2rem" }
     },
     headingContainerBox: {
         display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -476,7 +489,7 @@ export const DisplayProductsStyles = {
     displayProductsBox: {
         display: "flex",
         flexFlow: "wrap",
-        justifyContent: { sm: "start", xs: "center" },
+        justifyContent: { sm: "center", xs: "center" },
         alignItems: "center",
     },
     dotsBox: {
@@ -522,13 +535,13 @@ export const ContactFormStyles = {
         width: { md: "500px", sm: "460px", xs: "280px" },
     },
     buttonBox: {
-        display: 'flex', justifyContent: { lg: 'start', xs: "center" }
+        display: 'flex', justifyContent: { lg: 'start', xs: "center" }, marginTop: "1rem"
     },
     sendMessageButton: {
         borderRadius: "5px", color: "#FFF", background: "#101010", padding: "0.7rem 2.5rem",
     },
     labelStyle: {
-        fontWeight: 400, color: "#121212", textAlign: "start"
+        fontWeight: 400, color: "#121212", textAlign: "start", marginTop: "0.4rem", fontSize: { md: "1rem", sm: "0.8rem", xs: "0.75rem" },
     },
     formGrid: {
         justifyContent: { lg: 'end', xs: "center" }, alignItems: { lg: 'end', xs: "center" },
@@ -662,7 +675,7 @@ export const OrderStyles = {
     orderDetailFormFlexBox: { display: "flex", width: "100%", gap: "1rem", },
     orderDetailFormDividerStyle: { height: "1px solid #6C7275", mt: 2.5, mb: 2.5 },
     orderDetailFormSelectField: { borderRadius: '0.5rem', border: '1px solid #E4E4E7', color: '#52525B', fontFamily: 'var(--font-family-secondary)', margin: '0.5rem 0rem 1rem 0rem', fontSize: '0.95rem', height: "2.7rem" },
-    orderDetailFormFieldInputProps: { maxLength: 50, style: { padding: 8 } },
+    orderDetailFormFieldInputProps: { maxLength: 20, style: { padding: 8 } },
     orderDetailFormCheckboxContainerBox: { display: "flex", marginLeft: { sm: "-0.5rem", xs: "0.5rem" }, },
     orderDetailFormPaymentFieldBox: { borderRadius: '0.2rem', border: '1px solid #E4E4E7', margin: '0.5rem 0rem 1rem 0rem', padding: '0rem 1rem', display: "flex", alignItems: "center", justifyContent: "space-between", },
     orderDetailTrackStepperStack: { width: '100%', maxWidth: "30rem", paddingTop: "2rem" },
@@ -753,7 +766,7 @@ export const MyAccountStyles = {
         textAlign: { md: "start", xs: "center" }, fontSize: "1rem"
     },
     contentBox: {
-        flexDirection: { lg: "row", xs: "column" }, justifyContent: { md: 'space-between', xs: "center" }, alignItems: { lg: "center", md: 'start', xs: "center" }, maxWidth: { lg: 900, xs: "100%" }, gap: "1rem"
+        flexDirection: { lg: "row", xs: "column" }, justifyContent: { md: 'space-between', xs: "center" }, alignItems: { lg: "center", md: 'start', xs: "center" }, maxWidth: { lg: 900, xs: "100%" }, gap: "1rem",
     },
     firstBox: {
         display: "flex", flexDirection: { sm: "row", xs: "column" }, alignItems: "center", gap: "1rem"
@@ -800,7 +813,7 @@ export const ShopStyles = {
     mainFirstGrid: { display: "flex", justifyContent: "center", },
     mainSecondGrid: { display: "flex", justifyContent: { lg: "start", xs: "center" } },
     mainThirdGrid: { display: "flex", flexDirection: "column", justifyContent: { lg: "start", xs: "center" } },
-    shopCategoriesContainerBox: { display: "flex", flexFlow: "wrap", justifyContent: "center", alignItems: "center", gap: "2rem", padding: "1rem" },
+    shopCategoriesContainerBox: { display: "flex", flexFlow: "wrap", justifyContent: "center", alignItems: "center", gap: "2.5rem", padding: "1rem" },
     shopCategoriesContentBox: { padding: "1rem 0rem", cursor: "pointer" },
     shopCategoriesTypo: { fontFamily: 'var(--font-family-primary)', fontSize: "0.9rem", paddingTop: "1.5rem" },
     shopFilterOptionTypo: { fontSize: "0.9rem", fontWeight: 600 },

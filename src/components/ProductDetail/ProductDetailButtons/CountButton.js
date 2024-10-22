@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import { addProductToCart, removeProductFromCart, updateProductQuantity } from '@/redux/slices/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const CounterContainer = styled(Box)({
   display: 'flex',
@@ -26,28 +29,66 @@ const CounterValue = styled(Typography)({
   fontSize: '16px',
 });
 
-const CountButton = () => {
-  const [count, setCount] = useState(0);
+const CountButton = ({ product, initialQuantity = 1, onQuantityChange }) => {
 
-  const handleDecrement = () => {
-    setCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
+  const [productQuantity, setProductQuantity] = useState(initialQuantity); // Start with the initial quantity
+
+  // Function to update the quantity
+  const handleUpdateQuantity = (newQuantity) => {
+    if (newQuantity < 1) {
+      newQuantity = 1; // Ensure quantity never goes below 1
+    }
+    setProductQuantity(newQuantity); // Update the local state
+    onQuantityChange(newQuantity);   // Call the parent function to pass the updated quantity
   };
 
-  const handleIncrement = () => {
-    setCount(prevCount => prevCount + 1);
-  };
+
+  // const dispatch = useDispatch();
+  // const cartItems = useSelector((state) => state.product.cart);
+
+  // // Check if the product exists in the cart
+  // const cartProduct = cartItems.find(item => item.id === product?.id);
+  // const productQuantity = cartProduct ? cartProduct.quantity : 0;
+
+  // const handleUpdateQuantity = (productId, quantity) => {
+  //   if (quantity === 0) {
+  //     // If quantity is zero, remove the product from the cart
+  //     dispatch(removeProductFromCart(productId));
+  //   } else if (quantity === 1 && productQuantity === 0) {
+  //     // If it's the first click and the product is not in the cart, add it with quantity 1
+  //     dispatch(addProductToCart({ ...product, quantity }));
+  //   } else {
+  //     // Update the product quantity
+  //     dispatch(updateProductQuantity({ id: productId, quantity }));
+  //   }
+  // };
+
 
   return (
     <CounterContainer>
-      <CounterButton onClick={handleDecrement}>
+
+      <CounterButton onClick={() => handleUpdateQuantity(productQuantity - 1)}>
         -
       </CounterButton>
-      <CounterValue>{count}</CounterValue>
-      <CounterButton onClick={handleIncrement}>
+      <CounterValue>{productQuantity}</CounterValue>
+      <CounterButton onClick={() => handleUpdateQuantity(productQuantity + 1)}>
         +
       </CounterButton>
+
+
+      {/* <CounterButton onClick={() => handleUpdateQuantity(product?.id, productQuantity - 1)}>
+        -
+      </CounterButton>
+      <CounterValue>{productQuantity}</CounterValue>
+      <CounterButton onClick={() => handleUpdateQuantity(product?.id, productQuantity + 1)}>
+        +
+      </CounterButton> */}
+
     </CounterContainer>
+
   );
 };
 
 export default CountButton;
+
+

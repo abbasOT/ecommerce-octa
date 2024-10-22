@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     allProducts: [],
+    allProductsFromMedusa: [],
     cart: [],
     wishList: [],
     selectedProduct: null,
@@ -17,10 +18,12 @@ const productSlice = createSlice({
         addProductToCart: (state, action) => {
             const existingProduct = state.cart.find(product => product.id === action.payload.id);
 
+            const quantityToAdd = action.payload.quantity ? action.payload.quantity : 1;
+
             if (existingProduct) {
-                existingProduct.quantity += 1; // Increase quantity if product already in cart
+                existingProduct.quantity += quantityToAdd; // Increase quantity if product already in cart
             } else {
-                state.cart.push({ ...action.payload, quantity: 1 }); // Add new product with quantity 1
+                state.cart.push({ ...action.payload, quantity: quantityToAdd }); // Add new product with quantity 1
             }
         },
         removeProductFromCart: (state, action) => {
@@ -33,6 +36,9 @@ const productSlice = createSlice({
             if (product) {
                 product.quantity = quantity; // Update quantity
             }
+        },
+        clearCart: (state) => {
+            state.cart = []; // Clear the entire cart
         },
         addProductToWishList: (state, action) => {
             // Check if the product already exists in the wishlist
@@ -50,8 +56,13 @@ const productSlice = createSlice({
         allProducts: (state, action) => {
             state.allProducts = action.payload;
         },
+        allProductsFromMedusa: (state, action) => {
+            state.allProductsFromMedusa = action.payload;
+        },
     },
 });
 
-export const { addProductToCart, removeProductFromCart, addProductToWishList, removeProductFromWishList, selectProduct, updateProductQuantity, allProducts } = productSlice.actions;
+export const { addProductToCart, removeProductFromCart, addProductToWishList, removeProductFromWishList, selectProduct, updateProductQuantity, allProducts, allProductsFromMedusa,
+    clearCart,
+} = productSlice.actions;
 export default productSlice.reducer;

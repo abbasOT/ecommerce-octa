@@ -7,13 +7,16 @@ import { MyAccountStyles } from '@/components/Ui/Styles/Styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateOrderValue } from '@/redux/slices/orderSlice';
 import { styles } from '../../Ui/Styles/SecondaryStyles';
+import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import medusa from '@/medusaClient';
+import { clearCart } from '@/redux/slices/productSlice';
 function OrderTrackSummaryCard() {
 
     const dispatch = useDispatch()
     const router = useRouter()
     const cartId = typeof window !== 'undefined' ? localStorage.getItem("cart_id") : null;
+    const subTotalAmount = useSelector((state) => state.order.subTotalAmount);
     const cartItems = useSelector((state) => state.product.cart);
     const [loading, setLoading] = useState(false);
 
@@ -23,7 +26,8 @@ function OrderTrackSummaryCard() {
 
 
     const orderDetails = useSelector((state) => state.order);
-    const subtotal = cartItems.reduce((sum, item) => sum + ((item.variants[0].prices[0].amount * 280) * (item.quantity)), 0);
+    // const subtotal = cartItems.reduce((sum, item) => sum + ((item.variants[0].prices[0].amount * 280) * (item.quantity)), 0);
+    const subtotal = subTotalAmount
     const ship = 0; // Fixed the shipping cost
     const price = subtotal + ship;
     const discount = price * 0.10
@@ -45,6 +49,42 @@ function OrderTrackSummaryCard() {
     const customerId = orderDetails?.customerId
 
     const handleCompletePurchase = async () => {
+
+        const { firstName, lastName, streetAddress, city, state, zipCode, phone, paymentMethod, email, paymentSecreenShotURL } = orderDetails;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Validation: Check if any required field is empty
+        if (!firstName || !lastName || !streetAddress || !city || !state || !zipCode || !phone || !paymentMethod) {
+            Swal.fire({
+                title: "Error",
+                text: "Please fill in all required fields",
+                icon: "warning",
+                button: "OK",
+            });
+            return; // Stop further execution if validation fails
+        }
+        if (!emailRegex.test(email)) {
+            Swal.fire({
+                title: "Invalid Email",
+                text: "Please enter a valid email address",
+                icon: "warning",
+                button: "OK",
+            });
+            return; // Stop further execution if validation fails
+        }
+
+        // Validation: Check if payment screenshot URL is empty
+        if (!paymentSecreenShotURL) {
+            Swal.fire({
+                title: "Payment Screenshot Required",
+                text: "Please upload a screenshot of your payment",
+                icon: "warning",
+                button: "OK",
+            });
+            return; // Stop further execution if validation fails
+        }
+
         setLoading(true);
         try {
 
@@ -61,6 +101,10 @@ function OrderTrackSummaryCard() {
                     province: orderDetails.state,
                     postal_code: orderDetails.zipCode,
                     phone: orderDetails.phone,
+                    metadata: {
+                        paymentMethod: orderDetails.paymentMethod, // Example metadata field
+                        paymentSecreenShot: orderDetails.paymentSecreenShotURL, // Add more fields if necessary
+                    },
                 },
             });
 
@@ -119,21 +163,44 @@ function OrderTrackSummaryCard() {
 
             // Show a success alert when the purchase is completed
 
-            alert("Your order has been successfully completed!");
-            setLoading(false);
-            localStorage.removeItem("cart_id");
-            // Handle successful completion (e.g., navigate to order confirmation page)
-            router.push('/order/complete');
+            // alert("Your order has been successfully completed!");
+            Swal.fire({
+                title: 'Order Completed',
+                text: 'Your order has been successfully completed!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                setLoading(false);
+                localStorage.removeItem("cart_id");
+                // Handle successful completion (e.g., navigate to order confirmation page)
+                router.push('/order/complete');
+            });
 
         } catch (error) {
             console.error("Error completing purchase:", error);
-            alert("Error occur while completing your purchase. Please try again with new cart.");
-            setLoading(false);
-            localStorage.removeItem("cart_id");
-            router.push('/order/failed');
+            // alert("Error occur while completing your purchase. Please try again with new cart.");
+            Swal.fire({
+                title: 'Error',
+                text: 'Error occur while completing your purchase. Please try again with new cart.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                setLoading(false);
+                localStorage.removeItem("cart_id");
+                router.push('/order/failed');
+            });
         }
     };
 
+
+
+
+    const truncateTitle = (title) => {
+        if (title.length > 35) {
+            return title.substring(0, 35) + '...';
+        }
+        return title;
+    };
 
 
     return (
@@ -149,14 +216,13 @@ function OrderTrackSummaryCard() {
                             </Box>
                             <Box sx={styles.orderTrackSummaryCardPrductTypoBox}>
                                 <Typography sx={{ ...styles.bold, ...styles.typoFont }}>
-                                    {item.title}
+                                    {truncateTitle(item?.title)}
                                 </Typography>
                                 <Typography sx={styles.orderTrackSummaryCardTotalItems}>
                                     {item.quantity} item{item.quantity > 1 ? 's' : ''}
                                 </Typography>
                                 <Typography sx={{ ...styles.boldfont2 }}>
-                                    Rs {((item.variants[0].prices[0].amount * 280) * (item.quantity)).toFixed(2)}
-
+                                    Rs {((item.variants[0].prices[0].amount) * (item.quantity)).toFixed(2)}
                                 </Typography>
                             </Box>
                         </Box>
@@ -179,7 +245,7 @@ function OrderTrackSummaryCard() {
                             {loading ? <CircularProgress size={24} sx={{ color: "#FFF" }} /> : "Complete Purchase"}
                         </Button>
 
-                        <Typography style={styles.udtxt}>Edit cart</Typography>
+                        <Typography onClick={() => router.push('/add-to-cart')} style={styles.udtxt}>Edit cart</Typography>
                     </Grid>
                 </Grid>
             </Paper>

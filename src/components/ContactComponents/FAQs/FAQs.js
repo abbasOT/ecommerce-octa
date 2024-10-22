@@ -11,7 +11,7 @@ import { Container } from '@mui/material';
 import { FAQsData } from './FAQsData';
 import { CategoriesCardStyles, FAQsStyles, FooterMainStyles } from '@/components/Ui/Styles/Styles';
 export default function FAQs() {
-    const category = "Front End"
+    const category = "CircuitHub"
     const [expanded, setExpanded] = useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {

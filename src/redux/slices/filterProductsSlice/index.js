@@ -6,10 +6,12 @@ const filterProductsSlice = createSlice({
     name: 'filterProducts',
     initialState: {
         priceRange: [50, 7000],
-        appliedPriceRange: [50, 7000],
+        // appliedPriceRange: [50, 7000],
+        appliedPriceRange: [],
         stockStatus: [],
         size: [],
         color: [],
+        sorting: "default",
     },
     reducers: {
         setPriceRange: (state, action) => {
@@ -27,10 +29,13 @@ const filterProductsSlice = createSlice({
         setColor: (state, action) => {
             state.color = action.payload;
         },
+        setSorting: (state, action) => {
+            state.sorting = action.payload;
+        },
     },
 
 });
 
-export const { setPriceRange, setAppliedPriceRange, setStockStatus, setSize, setColor } = filterProductsSlice.actions;
+export const { setPriceRange, setAppliedPriceRange, setStockStatus, setSize, setColor, setSorting } = filterProductsSlice.actions;
 export default filterProductsSlice.reducer;
 
